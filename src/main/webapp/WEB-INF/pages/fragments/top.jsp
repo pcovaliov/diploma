@@ -46,11 +46,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/tweet"><b>N</b>ETTY </a>
+            <a class="navbar-brand" href="/main"><b>TM</b> </a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/tweet" class="status_name"><span class="glyphicon glyphicon-home"></span> <spring:message
+                <li><a href="/main" class="status_name"><span class="glyphicon glyphicon-home"></span> <spring:message
                         code='home'/></a>
                 </li>
                 <li><a href="/user/profile/" class="status_name"><span class="glyphicon glyphicon-user"></span>
@@ -64,11 +64,11 @@
                 <ul class="navbar nav navbar-nav">
                     <li><a style="color:whitesmoke;" href="?lang=en">en</a></li>
                     <li><a>|</a></li>
-                    <li><a style="color:whitesmoke;" href="?lang=ru">ru</a></li>
-                    <li><a>|</a></li>
+                    <%--<li><a style="color:whitesmoke;" href="?lang=ru">ru</a></li>--%>
+                    <%--<li><a>|</a></li>--%>
                     <%--<li><a style="color:whitesmoke;" href="?lang=ES">es</a></li>--%>
                     <%--<li><a>|</a></li>--%>
-                    <li><a style="color:whitesmoke;" href="?lang=md">ro</a></li>
+                    <%--<li><a style="color:whitesmoke;" href="?lang=md">ro</a></li>--%>
                 </ul>
 
                 <form class="navbar-form pull-right" role="search">
