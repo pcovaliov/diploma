@@ -23,8 +23,8 @@ import java.io.File;
  */
 
 @Controller
-@RequestMapping("tweet")
-public class TweetController {
+@RequestMapping("main")
+public class MainController {
 
     @Autowired
     private TweetServiceImpl tweetService;

@@ -39,7 +39,7 @@ public class LoginController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String loginPage() {
-        return "redirect:/tweet";
+        return "redirect:/main";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -84,7 +84,7 @@ public class LoginController {
         }
         userService.addUser(user);
         userService.autologin(user);
-        return "redirect:tweet";
+        return "redirect:main";
     }
 
 }
