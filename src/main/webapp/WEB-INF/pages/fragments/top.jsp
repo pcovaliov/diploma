@@ -56,6 +56,10 @@
                 <li><a href="/user/profile/" class="status_name"><span class="glyphicon glyphicon-user"></span>
                     <spring:message code='my_account'/></a></li>
                 <li></li>
+                <!-- TODO FINISH REDIRECT-->
+                <li><a href="/user/profile/" class="status_name"><span class="glyphicon glyphicon-plus-sign"></span>
+                <spring:message code='new_task'/></a></li>
+                <li></li>
                 <li><a href="<c:url value="/logout" />" class="status_name"><span
                         class="glyphicon glyphicon-off"></span> <spring:message code='logout'/></a></li>
 
@@ -64,11 +68,11 @@
                 <ul class="navbar nav navbar-nav">
                     <li><a style="color:whitesmoke;" href="?lang=en">en</a></li>
                     <li><a>|</a></li>
-                    <%--<li><a style="color:whitesmoke;" href="?lang=ru">ru</a></li>--%>
-                    <%--<li><a>|</a></li>--%>
+                    <li><a style="color:whitesmoke;" href="?lang=ru">ru</a></li>
+                    <li><a>|</a></li>
                     <%--<li><a style="color:whitesmoke;" href="?lang=ES">es</a></li>--%>
                     <%--<li><a>|</a></li>--%>
-                    <%--<li><a style="color:whitesmoke;" href="?lang=md">ro</a></li>--%>
+                    <li><a style="color:whitesmoke;" href="?lang=md">ro</a></li>
                 </ul>
 
                 <form class="navbar-form pull-right" role="search">
