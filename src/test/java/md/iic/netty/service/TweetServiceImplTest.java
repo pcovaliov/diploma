@@ -54,7 +54,7 @@ public class TweetServiceImplTest {
     public void testDeleteTweetJunit() throws Exception {
         tweetDao.addTweet(tweet);
 
-        tweetDao.deleteTweet(tweet);
+//        tweetDao.deleteTweet(tweet);
 
         System.out.println(tweetDao.getTweetById(tweet.getId()));
 //        Assert.assertNull();
