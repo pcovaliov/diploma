@@ -2,20 +2,23 @@ DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS followers;
 DROP TABLE IF EXISTS persistent_logins;
-DROP TABLE IF EXISTS tweet;
+DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS users;
 
+DROP SEQUENCE IF EXISTS status_id_seq;
 DROP SEQUENCE IF EXISTS likes_id_seq;
 DROP SEQUENCE IF EXISTS comments_id_seq;
 DROP SEQUENCE IF EXISTS followers_id_seq;
-DROP SEQUENCE IF EXISTS tweet_id_seq;
+DROP SEQUENCE IF EXISTS task_id_seq;
 DROP SEQUENCE IF EXISTS users_id_seq;
 
 CREATE SEQUENCE users_id_seq;
-CREATE SEQUENCE tweet_id_seq;
+CREATE SEQUENCE task_id_seq;
 CREATE SEQUENCE comments_id_seq;
 CREATE SEQUENCE followers_id_seq;
 CREATE SEQUENCE likes_id_seq;
+CREATE SEQUENCE status_id_seq;
 
 -- create table users (
 --   id int primary key,
@@ -45,8 +48,8 @@ CREATE TABLE public.users (
 );
 
 CREATE UNIQUE INDEX unique_username ON users USING BTREE (username);
-CREATE TABLE public.tweet (
-  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('tweet_id_seq'::regclass),
+CREATE TABLE public.task (
+  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('task_id_seq'::regclass),
   postdatetime TIMESTAMP WITHOUT TIME ZONE,
   text CHARACTER VARYING(255),
   user_id INTEGER,
@@ -59,12 +62,12 @@ CREATE TABLE public.tweet (
 CREATE TABLE public.comments (
   id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('comments_id_seq'::regclass),
   text CHARACTER VARYING(255),
-  tweet_id INTEGER,
+  task_id INTEGER,
   user_id INTEGER,
   postdatetime TIMESTAMP WITHOUT TIME ZONE,
   FOREIGN KEY (user_id) REFERENCES users (id)
   MATCH SIMPLE  ON UPDATE NO ACTION ON DELETE NO ACTION,
-  FOREIGN KEY (tweet_id) REFERENCES tweet (id)
+  FOREIGN KEY (task_id) REFERENCES task (id)
   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
@@ -80,9 +83,9 @@ CREATE TABLE public.followers (
 
 CREATE TABLE public.likes (
   id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
-  tweet_id INTEGER,
+  task_id INTEGER,
   user_id INTEGER,
-  FOREIGN KEY (tweet_id) REFERENCES public.tweet (id)
+  FOREIGN KEY (task_id) REFERENCES public.task (id)
   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
   FOREIGN KEY (user_id) REFERENCES public.users (id)
   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
@@ -93,4 +96,12 @@ CREATE TABLE public.persistent_logins (
   series CHARACTER VARYING(64) PRIMARY KEY NOT NULL,
   token CHARACTER VARYING(64) NOT NULL,
   last_used TIMESTAMP WITHOUT TIME ZONE NOT NULL
+);
+
+CREATE TABLE pubic.status(
+  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
+  task_id INTEGER,
+  status CHARACTER VARYING(64) NOT NULL,
+  FOREIGN KEY (task_id) REFERENCES public.task (id)
+  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );

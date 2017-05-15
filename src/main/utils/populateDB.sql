@@ -1,6 +1,7 @@
 DELETE FROM comments;
 DELETE FROM likes;
-DELETE FROM tweet;
+DELETE FROM status;
+DELETE FROM task;
 DELETE FROM followers;
 DELETE FROM users;
 
@@ -10,17 +11,17 @@ INSERT INTO users
   (username, password, first_name, last_name, email)
 VALUES
   ('DGULCO', 'dgulco', 'Dmitrii', 'Gulco', 'dgulco@endava.com'),
-  ('ACUSNIR', 'acusnir', 'Alexandr', 'Cusnir', 'acusnir@endava.com'),
-  ('MBEZALIUC', 'mbezaliuc', 'Mila', 'Bezaliuc', 'mbezaliuc@endava.com'),
+  ('ACUSNIR', 'ACUSNIR', 'Alexandr', 'Cusnir', 'pcovaliov@endava.com'),
+  ('MBIZALIUC', 'MBIZALIUC', 'Mila', 'Bezaliuc', 'pcovaliov@endava.com'),
   ('IPANASENKO', '123456','Iunona', 'Panasenko','panasenko@gmail.com'),
   ('VCRACIUN', '123456', 'Victor', 'Craciun', 'craciun@gmail.com'),
   ('ELAUR', '123456','Edik', 'Laur','edik@endava.com'),
-  ('PCOVALIOV', '123456', 'Victor', 'Craciun', 'pcovaliov@endava.com'),
+  ('PCOVALIOV', '123456', 'Petru', 'Covaliov', 'pcovaliov@endava.com'),
   ('ISANDUL', '123456','Ion', 'Sandul','isandul@endava.com'),
   ('SREULET', '123456', 'Serghei', 'Reulet', 'sreulet@endava.com'),
   ('MUSTIMOV', '123456','Maxim', 'Ustimov','mustimov@endava.com');
 
-INSERT INTO tweet
+INSERT INTO task
   (user_id, text, postdatetime)
 VALUES
   (1, 'Hi, people. Nice to see you there!', now()),
@@ -65,7 +66,7 @@ http://creamfields.com/steelyard ', now()),
 
 
   insert into comments
-  (user_id,tweet_id,text)
+  (user_id,task_id,text)
   values
   (1,1,'Same feeling!'),
   (2,1,'Do you realy think so?'),
@@ -86,7 +87,7 @@ http://creamfields.com/steelyard ', now()),
   (6,10,'Fallin asleep!'),
   (3,10,'have a nice day , guys!');
 
-insert into likes(tweet_id, user_id) VALUES
+insert into likes(task_id, user_id) VALUES
   (1,1),
   (2,1),
   (3,3),

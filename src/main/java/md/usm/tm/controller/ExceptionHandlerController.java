@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by mbezaliuc on 11/11/2016.
+ * Created by pcovaliov on 11/11/2016.
  */
 
 @ControllerAdvice

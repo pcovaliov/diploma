@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by mbezaliuc on 11/2/2016.
+ * Created by pcovaliov on 11/2/2016.
  */
 
 @Service

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mbezaliuc on 11/2/2016.
+ * Created by pcovaliov on 11/2/2016.
  */
 
 @Entity
@@ -95,7 +95,7 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OrderBy(value = "postDateTime DESC")
-    private List<Task> allTweets = new ArrayList<>();
+    private List<Task> allTasks = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
@@ -180,11 +180,11 @@ public class User implements Serializable {
     }
 
     public List<Task> getAllTweets() {
-        return allTweets;
+        return allTasks;
     }
 
     public void setAllTweets(List<Task> allTweets) {
-        this.allTweets = allTweets;
+        this.allTasks = allTweets;
     }
 
     public List<User> getUsersIFollow() {
@@ -232,7 +232,7 @@ public class User implements Serializable {
         if (first_name != null ? !first_name.equals(user.first_name) : user.first_name != null) return false;
         if (last_name != null ? !last_name.equals(user.last_name) : user.last_name != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        return allTweets != null ? allTweets.equals(user.allTweets) : user.allTweets == null;
+        return allTasks != null ? allTasks.equals(user.allTasks) : user.allTasks == null;
 
     }
 
@@ -244,7 +244,7 @@ public class User implements Serializable {
         result = 31 * result + (first_name != null ? first_name.hashCode() : 0);
         result = 31 * result + (last_name != null ? last_name.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (allTweets != null ? allTweets.hashCode() : 0);
+        result = 31 * result + (allTasks != null ? allTasks.hashCode() : 0);
         return result;
     }
 

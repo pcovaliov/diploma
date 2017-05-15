@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.File;
 
 /**
- * Created by mbezaliuc on 11/2/2016.
+ * Created by pcovaliov on 11/2/2016.
  */
 
 @Controller
@@ -34,6 +34,7 @@ public class MainController {
     private UserServiceImpl userService;
 
     private void init(Model model) {
+        model.addAttribute("task",new Task());
         model.addAttribute("tweet", new Task());
         model.addAttribute("followMe", userService.getUsersWhoFollowMe());
         model.addAttribute("myTweets", userService.getAllUsersTweets(userService.getIdByName(getPrincipal())));

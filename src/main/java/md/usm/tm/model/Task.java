@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mbezaliuc on 11/2/2016.
+ * Created by pcovaliov on 11/2/2016.
  */
 
 @Entity
-@Table(name = "tweet")
+@Table(name = "task")
 public class Task implements Serializable{
 
     @Id
@@ -22,7 +22,7 @@ public class Task implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;  //owner of the tweet
+    private User user;
 
     @Column(name = "text")
     private String text;
@@ -37,9 +37,9 @@ public class Task implements Serializable{
     private String image;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "tweet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @OrderBy(value = "postDateTime ASC")
-    private List<Comment> tweetComments = new ArrayList<>();
+    private List<Comment> taskComments = new ArrayList<>();
 
     public Task() {
     }
@@ -81,12 +81,12 @@ public class Task implements Serializable{
         this.postDateTime = postDateTime;
     }
 
-    public List<Comment> getTweetComments() {
-        return tweetComments;
+    public List<Comment> gettaskComments() {
+        return taskComments;
     }
 
-    public void setTweetComments(List<Comment> tweetComments) {
-        this.tweetComments = tweetComments;
+    public void settaskComments(List<Comment> taskComments) {
+        this.taskComments = taskComments;
     }
 
     public String getImage() {

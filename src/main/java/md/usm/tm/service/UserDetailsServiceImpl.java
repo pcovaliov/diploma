@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by mbezaliuc on 11/3/2016.
+ * Created by pcovaliov on 11/3/2016.
  */
 
 @Service("userDetailsService")

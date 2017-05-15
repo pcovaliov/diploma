@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by MAD-TEAM on 11/1/2016.
+ * Created by pcovaliov on 11/1/2016.
  */
 
 @Controller

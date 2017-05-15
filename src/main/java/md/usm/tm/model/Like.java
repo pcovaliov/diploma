@@ -3,7 +3,7 @@ package md.usm.tm.model;
 import javax.persistence.*;
 
 /**
- * Created by mbezaliuc on 11/24/2016.
+ * Created by pcovaliov on 11/24/2016.
  */
 
 @Entity
@@ -15,8 +15,8 @@ public class Like {
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "tweet_id")
-    private Task tweet;
+    @JoinColumn(name = "task_id")
+    private Task task;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -26,16 +26,16 @@ public class Like {
     }
 
     public Like(Task tweet, User user) {
-        this.tweet = tweet;
+        this.task = tweet;
         this.user = user;
     }
 
     public Task getTweet() {
-        return tweet;
+        return task;
     }
 
     public void setTweet(Task tweet) {
-        this.tweet = tweet;
+        this.task = tweet;
     }
 
     public User getUser() {
@@ -53,14 +53,14 @@ public class Like {
 
         Like like = (Like) o;
 
-        if (tweet != null ? !tweet.equals(like.tweet) : like.tweet != null) return false;
+        if (task != null ? !task.equals(like.task) : like.task != null) return false;
         return user != null ? user.equals(like.user) : like.user == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = tweet != null ? tweet.hashCode() : 0;
+        int result = task != null ? task.hashCode() : 0;
         result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
@@ -68,7 +68,7 @@ public class Like {
     @Override
     public String toString() {
         return "Like{" +
-                "tweet=" + tweet +
+                "tweet=" + task +
                 ", user=" + user +
                 '}';
     }

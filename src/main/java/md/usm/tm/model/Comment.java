@@ -17,8 +17,8 @@ public class Comment {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "tweet_id")
-    private Task tweet;
+    @JoinColumn(name = "task_id")
+    private Task task;
 
     @Column(name = "text")
     private String text;
@@ -29,10 +29,10 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(User user, Task tweet, String text) {
+    public Comment(User user, Task task, String text) {
         this.text = text;
         this.user = user;
-        this.tweet = tweet;
+        this.task = task;
         postDateTime = LocalDateTime.now();
     }
 
@@ -60,12 +60,12 @@ public class Comment {
         this.user = user;
     }
 
-    public Task getTweet() {
-        return tweet;
+    public Task getTask() {
+        return task;
     }
 
-    public void setTweet(Task tweet) {
-        this.tweet = tweet;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public LocalDateTime getPostDateTime() {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by mbezaliuc on 11/2/2016.
+ * Created by pcovaliov on 11/2/2016.
  */
 
 @Repository
@@ -27,7 +27,7 @@ public class TweetDaoImpl {
     public Task addTweet(Task task) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(task);
-        logger.info("Tweet was added");
+        logger.info("Task was added");
 
         return task;
     }
@@ -35,27 +35,27 @@ public class TweetDaoImpl {
     public void updateTweet(Task task) {
         Session session = sessionFactory.getCurrentSession();
         session.update(task);
-        logger.info("Tweet was updated");
+        logger.info("Task was updated");
     }
 
     public Task deleteTweet(Task task) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(task);
-        logger.info("Tweet was deleted");
+        logger.info("Task was deleted");
         return task;
     }
 
     public Task getTweetById(int id) {
         return (Task) sessionFactory.getCurrentSession()
-                .createNativeQuery("SELECT * FROM tweet WHERE id=:id", Task.class)
+                .createNativeQuery("SELECT * FROM task WHERE id=:id", Task.class)
                 .setParameter("id", id)
                 .getResultList().get(0);
     }
 
     public List<Comment> getComments(int task_id) {
         return sessionFactory.getCurrentSession()
-                .createNativeQuery("SELECT * FROM comments WHERE tweet_id=:tweet_id ORDER BY postdatetime ASC", Comment.class)
-                .setParameter("tweet_id", task_id)
+                .createNativeQuery("SELECT * FROM comments WHERE task_id=:task_id ORDER BY postdatetime ASC", Comment.class)
+                .setParameter("task_id", task_id)
                 .getResultList();
     }
 

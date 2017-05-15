@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by mbezaliuc on 11/2/2016.
+ * Created by pcovaliov on 11/2/2016.
  */
 
 @Repository
@@ -63,7 +63,7 @@ public class UserDaoImpl {
 
     public List<Task> getAllUsersTweets(int user_id) {
         return sessionFactory.getCurrentSession().createNativeQuery(
-                "SELECT * FROM tweet WHERE user_id=:user_id ORDER BY postDateTime DESC", Task.class)
+                "SELECT * FROM task WHERE user_id=:user_id ORDER BY postDateTime DESC", Task.class)
                 .setParameter("user_id", user_id)
                 .getResultList();
     }
