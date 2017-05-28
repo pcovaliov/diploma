@@ -14,8 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "task")
-public class Task implements Serializable{
-
+public class Task implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,29 +23,62 @@ public class Task implements Serializable{
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+
     @Column(name = "text")
     private String text;
 
     @Column(name = "postDateTime")
-    private LocalDateTime postDateTime = LocalDateTime.now().plusHours(2);
+    private LocalDateTime postDateTime = LocalDateTime.now();
 
-    @Column(name="likes")
+    @Column(name = "likes")
     private int likes = 0;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "attachment")
+    private String attachment;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OrderBy(value = "postDateTime ASC")
-    private List<Comment> taskComments = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
+
+    @ManyToOne
+    @JoinColumn(name = "period_id")
+    private Period period;
 
     public Task() {
     }
 
-    public Task(User user, String text) {
-        this.user = user;
+    public Task(String text, User user, Project project, Period period) {
         this.text = text;
+        this.user = user;
+        this.project = project;
+        this.period = period;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 
     public int getId() {
@@ -81,20 +113,13 @@ public class Task implements Serializable{
         this.postDateTime = postDateTime;
     }
 
-    public List<Comment> gettaskComments() {
-        return taskComments;
-    }
-
-    public void settaskComments(List<Comment> taskComments) {
-        this.taskComments = taskComments;
-    }
 
     public String getImage() {
-        return image;
+        return attachment;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.attachment = image;
     }
 
     public int getLikes() {

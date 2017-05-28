@@ -78,10 +78,10 @@ public class User implements Serializable {
     private String confirmPassword;
 
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -115,11 +115,11 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String username, String password, String first_name, String last_name, String email) {
+    public User(String username, String password, String firstName, String lastName, String email) {
         this.username = username;
         this.password = password;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -156,19 +156,19 @@ public class User implements Serializable {
     }
 
     public String getFirst_name() {
-        return first_name;
+        return firstName;
     }
 
     public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+        this.firstName = first_name;
     }
 
     public String getLast_name() {
-        return last_name;
+        return lastName;
     }
 
     public void setLast_name(String last_name) {
-        this.last_name = last_name;
+        this.lastName = last_name;
     }
 
     public String getEmail() {
@@ -229,8 +229,8 @@ public class User implements Serializable {
         if (id != user.id) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (first_name != null ? !first_name.equals(user.first_name) : user.first_name != null) return false;
-        if (last_name != null ? !last_name.equals(user.last_name) : user.last_name != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         return allTasks != null ? allTasks.equals(user.allTasks) : user.allTasks == null;
 
@@ -241,8 +241,8 @@ public class User implements Serializable {
         int result = id;
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (first_name != null ? first_name.hashCode() : 0);
-        result = 31 * result + (last_name != null ? last_name.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (allTasks != null ? allTasks.hashCode() : 0);
         return result;

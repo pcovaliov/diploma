@@ -1,41 +1,21 @@
-DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS followers;
 DROP TABLE IF EXISTS persistent_logins;
 DROP TABLE IF EXISTS status;
-DROP TABLE IF EXISTS task;
+DROP TABLE IF EXISTS period CASCADE;
+DROP TABLE IF EXISTS project CASCADE;
+DROP TABLE IF EXISTS task CASCADE;
 DROP TABLE IF EXISTS users;
 
 DROP SEQUENCE IF EXISTS status_id_seq;
-DROP SEQUENCE IF EXISTS likes_id_seq;
-DROP SEQUENCE IF EXISTS comments_id_seq;
-DROP SEQUENCE IF EXISTS followers_id_seq;
 DROP SEQUENCE IF EXISTS task_id_seq;
+DROP SEQUENCE IF EXISTS period_id_seq;
+DROP SEQUENCE IF EXISTS project_id_seq;
 DROP SEQUENCE IF EXISTS users_id_seq;
 
 CREATE SEQUENCE users_id_seq;
 CREATE SEQUENCE task_id_seq;
-CREATE SEQUENCE comments_id_seq;
-CREATE SEQUENCE followers_id_seq;
-CREATE SEQUENCE likes_id_seq;
 CREATE SEQUENCE status_id_seq;
-
--- create table users (
---   id int primary key,
---   username varchar(25) UNIQUE not null,
---   password varchar(25) not null,
---   first_name varchar(50) not null,
---   last_name varchar(50) not null,
---   email varchar(50) not null
--- );
---
--- create table tweet (
---   id int primary key,
---   user_id integer not null,
---   text varchar(255) not null,
---   postDateTime TIMESTAMP DEFAULT now() not null,
---   foreign key (user_id) references users(id)
--- );
+CREATE SEQUENCE period_id_seq;
+CREATE SEQUENCE project_id_seq;
 
 CREATE TABLE public.users (
   id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('users_id_seq'::regclass),
@@ -48,48 +28,52 @@ CREATE TABLE public.users (
 );
 
 CREATE UNIQUE INDEX unique_username ON users USING BTREE (username);
+
+CREATE TABLE public.period(
+  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
+  period_name CHARACTER VARYING(64) NOT NULL,
+  start_date TIME WITH TIME ZONE,
+  end_date TIME WITH TIME ZONE,
+  user_id integer not null,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+
+CREATE TABLE public.project(
+  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
+  project_name CHARACTER VARYING(64) NOT NULL,
+  short_name CHARACTER VARYING(3) NOT NULL,
+  user_id integer not null,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE public.status(
+  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
+  description CHARACTER VARYING(64) NOT NULL,
+  status CHARACTER VARYING(64) NOT NULL
+);
+
 CREATE TABLE public.task (
   id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('task_id_seq'::regclass),
   postdatetime TIMESTAMP WITHOUT TIME ZONE,
   text CHARACTER VARYING(255),
   user_id INTEGER,
-  image CHARACTER VARYING(255),
-  likes INTEGER DEFAULT 0,
+  period_id INTEGER,
+  project_id INTEGER,
+  status_id INTEGER,
+  attachment CHARACTER VARYING(255),
   FOREIGN KEY (user_id) REFERENCES users (id)
-  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
-);
-
-CREATE TABLE public.comments (
-  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('comments_id_seq'::regclass),
-  text CHARACTER VARYING(255),
-  task_id INTEGER,
-  user_id INTEGER,
-  postdatetime TIMESTAMP WITHOUT TIME ZONE,
-  FOREIGN KEY (user_id) REFERENCES users (id)
-  MATCH SIMPLE  ON UPDATE NO ACTION ON DELETE NO ACTION,
-  FOREIGN KEY (task_id) REFERENCES task (id)
-  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
-);
-
-CREATE TABLE public.followers (
-  id INTEGER NOT NULL DEFAULT nextval('followers_id_seq'::regclass),
-  followed_id INTEGER,
-  follower_id INTEGER,
-  FOREIGN KEY (followed_id) REFERENCES users (id)
   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
-  FOREIGN KEY (follower_id) REFERENCES users (id)
+  FOREIGN KEY (period_id) REFERENCES period (id)
+  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  FOREIGN KEY (project_id) REFERENCES project (id)
+  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  FOREIGN KEY (status_id) REFERENCES status (id)
   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-CREATE TABLE public.likes (
-  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
-  task_id INTEGER,
-  user_id INTEGER,
-  FOREIGN KEY (task_id) REFERENCES public.task (id)
-  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
-  FOREIGN KEY (user_id) REFERENCES public.users (id)
-  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
-);
 
 CREATE TABLE public.persistent_logins (
   username CHARACTER VARYING(64) NOT NULL,
@@ -98,10 +82,6 @@ CREATE TABLE public.persistent_logins (
   last_used TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 
-CREATE TABLE pubic.status(
-  id INTEGER PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
-  task_id INTEGER,
-  status CHARACTER VARYING(64) NOT NULL,
-  FOREIGN KEY (task_id) REFERENCES public.task (id)
-  MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
-);
+
+
+

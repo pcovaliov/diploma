@@ -28,10 +28,7 @@ public class UserController {
     public String listUsers(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("listUsers", userService.getAllUsers());
-        model.addAttribute("myTweets", userService.getAllUsersTweets(userService.getIdByName(getPrincipal())));
-        model.addAttribute("followMe", userService.getUsersWhoFollowMe());
         model.addAttribute("currentUser", userService.getUserByName(getPrincipal()));
-        model.addAttribute("IFollow", userService.getUsersIFollow());
         return "users";
     }
 

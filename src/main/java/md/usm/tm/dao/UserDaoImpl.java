@@ -61,42 +61,13 @@ public class UserDaoImpl {
                 .getResultList();
     }
 
-    public List<Task> getAllUsersTweets(int user_id) {
+    public List<Task> getAllUsersTasks(int user_id) {
         return sessionFactory.getCurrentSession().createNativeQuery(
                 "SELECT * FROM task WHERE user_id=:user_id ORDER BY postDateTime DESC", Task.class)
                 .setParameter("user_id", user_id)
                 .getResultList();
     }
 
-    public List<User> getUsersIFollow(int follower_id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createNativeQuery(
-                "SELECT u.* FROM users u " +
-                        "JOIN followers f ON u.id=followed_id " +
-                        "WHERE follower_id=:follower_id", User.class)
-                .setParameter("follower_id", follower_id)
-                .getResultList();
-    }
-
-    public List<User> getUsersWhoFollowMe(int followed_id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createNativeQuery(
-                "SELECT u.* FROM users u " +
-                        "JOIN followers f ON u.id=follower_id " +
-                        "WHERE followed_id=:followed_id", User.class)
-                .setParameter("followed_id", followed_id)
-                .getResultList();
-    }
-
-    public List<User> getUsersWhoFollowMe() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getUsersWhoFollowMe(getIdByName(username));
-    }
-
-    public List<User> getUsersIFollow() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getUsersIFollow(getIdByName(username));
-    }
 
     public int getIdByName(String username) {
         User user = findByUsername(username);
@@ -112,24 +83,16 @@ public class UserDaoImpl {
                 .uniqueResult();
     }
 
-    public List<String> listOfEmails() {
+    public List<String> getAllEmails() {
         return sessionFactory.getCurrentSession()
                 .createNativeQuery("select email from users")
                 .list();
     }
 
-    public List<String> listOfUsernames() {
+    public List<String> getAllUsernames() {
         return sessionFactory.getCurrentSession()
                 .createNativeQuery("select username from users")
                 .list();
-    }
-
-    public int isFollowed(int thisUserId, int otherUserId) {
-        return
-                Integer.parseInt(String.valueOf(sessionFactory.getCurrentSession()
-                        .createNativeQuery("select count(*) from followers where follower_id="
-                                + thisUserId + " and followed_id=" + otherUserId)
-                        .getSingleResult()));
     }
 
 }

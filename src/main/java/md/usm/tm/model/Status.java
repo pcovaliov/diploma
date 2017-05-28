@@ -14,12 +14,39 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task_id;
-
     @Column(name = "status")
     private String status;
 
+    @Column(name = "description")
+    private String description;
 
+    public Status(String status, String description) {
+        this.status = status;
+        this.description = description;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

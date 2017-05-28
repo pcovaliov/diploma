@@ -16,7 +16,7 @@ VALUES
   ('IPANASENKO', '123456','Iunona', 'Panasenko','panasenko@gmail.com'),
   ('VCRACIUN', '123456', 'Victor', 'Craciun', 'craciun@gmail.com'),
   ('ELAUR', '123456','Edik', 'Laur','edik@endava.com'),
-  ('PCOVALIOV', '123456', 'Petru', 'Covaliov', 'pcovaliov@endava.com'),
+  ('pcovaliov', 'pcovaliov', 'pcovaliov', 'pcovaliov', 'pcovaliov@endava.com'),
   ('ISANDUL', '123456','Ion', 'Sandul','isandul@endava.com'),
   ('SREULET', '123456', 'Serghei', 'Reulet', 'sreulet@endava.com'),
   ('MUSTIMOV', '123456','Maxim', 'Ustimov','mustimov@endava.com');
@@ -64,36 +64,6 @@ http://creamfields.com/steelyard ', now()),
   (6, 'Volatile times. Holding my breath.', now()),
   (7, 'Happen to be in NYC election night... The energy in the city is absolutely insane ', now());
 
-
-  insert into comments
-  (user_id,task_id,text)
-  values
-  (1,1,'Same feeling!'),
-  (2,1,'Do you realy think so?'),
-  (3,2,'Good job!'),
-  (3,3,'Not that good!'),
-  (4,4,'I am with you!'),
-  (5,4,'No no no'),
-  (6,5,'Pokemons rule'),
-  (1,5,'Follow me!'),
-  (2,6,'Glad to see ya'),
-  (4,6,'Lets go to the Mall'),
-  (5,7,'Time to sleep!'),
-  (5,7,'Keep it goin!'),
-  (6,8,'Time matters'),
-  (4,8,'Lazy time'),
-  (3,9,'Is it really you'),
-  (5,9,'Come on, just do it!'),
-  (6,10,'Fallin asleep!'),
-  (3,10,'have a nice day , guys!');
-
-insert into likes(task_id, user_id) VALUES
-  (1,1),
-  (2,1),
-  (3,3),
-  (4,4),
-  (1,2),
-  (4,5);
 
 
 

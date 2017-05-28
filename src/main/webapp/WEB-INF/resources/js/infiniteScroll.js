@@ -53,7 +53,7 @@ function getNext(count){
                     '</span>'+
                     '<span>';
                     if(data[i].image!=null){
-                        trHTML +='<img src="<c:url value="/images/" />'+data[i].image+'" style="width:300px;">';
+                        trHTML +='<img src="<c:url value="/attachemnts/" />'+data[i].image+'" style="width:300px;">';
                     }
 
                 trHTML +='<p><a class="btn btn-info btn-sm pull-right glyphicon glyphicon-comment"'+

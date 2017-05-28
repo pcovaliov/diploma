@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <mvc:resources mapping="/images/**" location="file:/C:/Program Files (x86)/Java_ADD/apache-tomcat-8.5.4/webapps/images/"/>
+    <mvc:resources mapping="/attachemnts/**" location="file:/D:/Storage/TaskManager/store/attachemnts/"/>
 
     <context:component-scan base-package="md.usm.tm"/>
 

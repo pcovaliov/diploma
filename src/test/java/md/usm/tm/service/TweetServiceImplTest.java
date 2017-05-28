@@ -1,6 +1,6 @@
 package md.usm.tm.service;
 
-import md.usm.tm.dao.TweetDaoImpl;
+import md.usm.tm.dao.TaskDaoImpl;
 import md.usm.tm.model.Task;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class TweetServiceImplTest {
     private Task tweet = new Task();
 
     @Autowired
-    private TweetDaoImpl tweetDao;
+    private TaskDaoImpl tweetDao;
 
     @Before
     public void setTweet() {
@@ -52,19 +52,11 @@ public class TweetServiceImplTest {
 
     @Test
     public void testDeleteTweetJunit() throws Exception {
-        tweetDao.addTweet(tweet);
 
-//        tweetDao.deleteTweet(tweet);
-
-        System.out.println(tweetDao.getTweetById(tweet.getId()));
-//        Assert.assertNull();
     }
 
     @Test
     public void testGetTweetById() throws Exception {
-        tweetDao.addTweet(tweet);
-
-        Assert.assertEquals(tweet, tweetDao.getTweetById(tweet.getId()));
 
 //        Assert.assertNull(tweetDao.getTweetById(99999));
     }

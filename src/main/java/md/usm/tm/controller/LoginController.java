@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 
     private static final Logger logger = RootLogger.getLogger(LoginController.class);
 

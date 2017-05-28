@@ -57,7 +57,7 @@
                     <spring:message code='my_account'/></a></li>
                 <li></li>
                 <!-- TODO FINISH REDIRECT-->
-                <li><a href="/user/profile/" class="status_name"><span class="glyphicon glyphicon-plus-sign"></span>
+                <li><a href="/task/" class="status_name"><span class="glyphicon glyphicon-plus-sign"></span>
                 <spring:message code='new_task'/></a></li>
                 <li></li>
                 <li><a href="<c:url value="/logout" />" class="status_name"><span

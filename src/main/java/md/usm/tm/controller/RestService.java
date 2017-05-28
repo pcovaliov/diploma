@@ -1,11 +1,9 @@
 package md.usm.tm.controller;
 
-import md.usm.tm.model.Comment;
-import md.usm.tm.model.Like;
+import md.usm.tm.model.Period;
+import md.usm.tm.model.Project;
 import md.usm.tm.model.Task;
 import md.usm.tm.model.User;
-import md.usm.tm.service.CommentServiceImpl;
-import md.usm.tm.service.LikeServiceImpl;
 import md.usm.tm.service.TweetServiceImpl;
 import md.usm.tm.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,23 +19,16 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class RestService {
+public class RestService extends BaseController{
 
     @Autowired
     private UserServiceImpl userService;
 
     @Autowired
     private TweetServiceImpl tweetService;
-
-    @Autowired
-    private LikeServiceImpl likeService;
-
-    @Autowired
-    private CommentServiceImpl commentService;
 
     @RequestMapping(value = "/allusers/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllTweets() {
@@ -58,36 +48,6 @@ public class RestService {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/addLike", method = RequestMethod.POST)
-    @ResponseBody
-    public boolean addLike(@RequestParam int tweet_id, @RequestParam int user_id) {
-        Like like = new Like(tweetService.getTweetById(tweet_id), userService.getUserById(user_id));
-        if (likeService.thisTweetIsLikedByUser(tweet_id, user_id))
-            return true;
-        else {
-            likeService.addLike(like);
-            return false;
-        }
-    }
-
-    @RequestMapping(value = "/getnexttweets/{count}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Task>> getNextTweets(@PathVariable int count) {
-        List<Task> tweets = userService.allTweetsToShow(count * 25, 25);
-
-        return new ResponseEntity<>(tweets, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/searchUser", method = RequestMethod.GET)
-    public List<String> findUser(@RequestParam String username) {
-        List<String> result = new ArrayList<>();
-        for (String name : userService.listOfUsernames()) {
-            if (name.toLowerCase().contains(username.toLowerCase())) {
-                System.out.println(username + " " + name);
-                result.add(name);
-            }
-        }
-        return result;
-    }
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
@@ -122,53 +82,14 @@ public class RestService {
         return null;
     }
 
-    @Transactional
-    @RequestMapping(value = "unfollow/{username}", method = RequestMethod.GET)
-    public void unfollow(@PathVariable String username) {
-        User me = userService.getUserByName(getPrincipal());
-        userService.removeUserFromUsersIFollow(me, username);
-    }
-
-    @Transactional
-    @RequestMapping(value = "addfollower/{username}", method = RequestMethod.GET)
-    public void addFollower(@PathVariable String username) {
-        User me = userService.getUserByName(getPrincipal());
-        User user = userService.getUserByName(username);
-        userService.addUserToFollower(me, user);
-    }
-
-
-    @RequestMapping(value = "/addComment", method = RequestMethod.POST)
-    public void addComment(@RequestParam int id, @RequestParam String text) {
-        commentService.addComment(new Comment(userService.getUserByName(getPrincipal()), tweetService.getTweetById(id), text));
-    }
-
-    public String getPrincipal() {
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        return userName;
-    }
-
-    @RequestMapping(value = "/getComments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Comment>> getCommentsById(@RequestParam int tweet_id) {
-        List<Comment> comments = tweetService.getComments(tweet_id);
-
-        return new ResponseEntity<>(comments, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/addtweet", method = RequestMethod.POST)
+    @RequestMapping(value = "/addtask", method = RequestMethod.POST)
     public String addTweet(@RequestParam String text, @RequestParam String image) {
-        Task tweet = new Task(userService.getUserByName(getPrincipal()), text);
+        Task tweet = new Task(text, userService.getUserByName(getPrincipal()), new Project(), new Period());
         if (image != null && !image.isEmpty()) {
             tweet.setImage(image);
         }
         tweetService.addTweet(tweet);
-        return "redirect:/tweet";
+        return "redirect:/main";
     }
 
 }

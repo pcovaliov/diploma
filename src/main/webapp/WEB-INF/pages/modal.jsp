@@ -28,7 +28,7 @@
                 <c:if test="${thisTweet.image!=null}">
                     <c:if test="${!thisTweet.image.equals('')}">
                     <span width="80%" class="pull-right" style="padding-bottom: 10px">
-                    <img width="100%" src="<c:url value="/images/" />${thisTweet.image}">
+                    <img width="100%" src="<c:url value="/attachemnts/" />${thisTweet.image}">
                     </span>
                     </c:if>
                 </c:if>

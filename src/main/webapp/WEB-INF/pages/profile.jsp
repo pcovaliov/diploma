@@ -127,7 +127,7 @@
                                     <c:if test="${t.image!=null}">
                                         <c:if test="${!t.image.equals('')}">
                                             <span width="80%" class="pull-right">
-                                            <img width="100%" src="<c:url value="/images/" />${t.image}"></c:if></span>
+                                            <img width="100%" src="<c:url value="/attachemnts/" />${t.image}"></c:if></span>
                                     </c:if>
 
                                 </div>
