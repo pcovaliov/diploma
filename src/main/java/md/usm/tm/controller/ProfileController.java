@@ -2,12 +2,10 @@ package md.usm.tm.controller;
 
 import md.usm.tm.model.Task;
 import md.usm.tm.model.User;
-import md.usm.tm.service.TweetServiceImpl;
+import md.usm.tm.service.TaskServiceImpl;
 import md.usm.tm.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +21,7 @@ public class ProfileController extends BaseController{
     private UserServiceImpl userService;
 
     @Autowired
-    private TweetServiceImpl tweetService;
+    private TaskServiceImpl tweetService;
 
     private void init(Model model) {
         model.addAttribute("currentUser", userService.getUserByName(getPrincipal()));
@@ -47,12 +45,12 @@ public class ProfileController extends BaseController{
     }
 
 
-    @RequestMapping(value = "/edittweet/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/edittask/{id}", method = RequestMethod.POST)
     public String editTweet(@PathVariable int id, @RequestParam String text) {
 //        init(model);
 //        User user = userService.getUserByName(getPrincipal());
 //        model.addAttribute("usersTweets", userService.getAllUsersTweets(user.getId()));
-        Task tweet = tweetService.getTweetById(id);
+        Task tweet = tweetService.getTaskById(id);
         tweet.setText(text);
         tweetService.updateTweet(tweet);
         return "redirect:/user/profile/";

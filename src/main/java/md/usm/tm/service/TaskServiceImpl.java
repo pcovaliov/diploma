@@ -15,12 +15,12 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TweetServiceImpl {
+public class TaskServiceImpl {
 
     @Autowired
     private TaskDaoImpl tweetDao;
 
-    public Task addTweet(Task task) {
+    public Task addTask(Task task) {
         return tweetDao.addTask(task);
     }
 
@@ -28,14 +28,14 @@ public class TweetServiceImpl {
         tweetDao.updateTask(task);
     }
 
-    public Task deleteTweet(Task task) {
+    public Task deleteTask(Task task) {
         if (task.getUser().getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
             return tweetDao.deleteTask(task);
         }
         return null;
     }
 
-    public Task getTweetById(int id) {
+    public Task getTaskById(int id) {
         return tweetDao.getTaskById(id);
     }
 

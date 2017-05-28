@@ -1,12 +1,8 @@
 package md.usm.tm.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pcovaliov on 11/2/2016.
@@ -22,35 +18,18 @@ public class Task implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
-
     @Column(name = "text")
     private String text;
-
     @Column(name = "postDateTime")
     private LocalDateTime postDateTime = LocalDateTime.now();
-
-    @Column(name = "likes")
-    private int likes = 0;
-
     @Column(name = "attachment")
     private String attachment;
-
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
-
     @ManyToOne
     @JoinColumn(name = "period_id")
     private Period period;
@@ -63,6 +42,14 @@ public class Task implements Serializable {
         this.user = user;
         this.project = project;
         this.period = period;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Project getProject() {
@@ -120,14 +107,6 @@ public class Task implements Serializable {
 
     public void setImage(String image) {
         this.attachment = image;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
     @Override

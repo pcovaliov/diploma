@@ -4,14 +4,12 @@ import md.usm.tm.model.Period;
 import md.usm.tm.model.Project;
 import md.usm.tm.model.Task;
 import md.usm.tm.model.User;
-import md.usm.tm.service.TweetServiceImpl;
+import md.usm.tm.service.TaskServiceImpl;
 import md.usm.tm.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +26,7 @@ public class RestService extends BaseController{
     private UserServiceImpl userService;
 
     @Autowired
-    private TweetServiceImpl tweetService;
+    private TaskServiceImpl tweetService;
 
     @RequestMapping(value = "/allusers/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllTweets() {
@@ -88,7 +86,7 @@ public class RestService extends BaseController{
         if (image != null && !image.isEmpty()) {
             tweet.setImage(image);
         }
-        tweetService.addTweet(tweet);
+        tweetService.addTask(tweet);
         return "redirect:/main";
     }
 
