@@ -66,4 +66,24 @@ http://creamfields.com/steelyard ', now()),
 
 
 
+insert into project values(1,'Test project 01', 'T01', 7);
+insert into project values(2,'Test project 02', 'T02', 7);
+insert into project values(3,'Test project 03', 'T03', 7);
+insert into project values(4,'Test project 04', 'T04', 7);
+
+
+insert into period values (1,'Test Period 01','2016-05-29 00:19:40.454+03','2017-03-29 00:19:40.454+03',7) ;
+insert into period values (2,'Test Period 02','2016-05-29 00:19:40.454+03','2017-04-29 00:19:40.454+03',7) ;
+insert into period values (3,'Test Period 03','2016-05-29 00:19:40.454+03','2017-05-29 00:19:40.454+03',7) ;
+insert into period values (4,'Test Period 04','2016-05-29 00:19:40.454+03','2017-06-29 00:19:40.454+03',7) ;
+insert into period values (5,'Test Period 05','2016-05-29 00:19:40.454+03','2017-07-29 00:19:40.454+03',7) ;
+insert into period values (6,'Test Period 06','2016-05-29 00:19:40.454+03','2017-08-29 00:19:40.454+03',7) ;
+
+
+insert into status values (1,'Task has not yet started.', 'NOT STARTED');
+insert into status values (2,'Task is in progress.', 'IN PROGRESS');
+insert into status values (3,'Task is in review.', 'IN REVIEW');
+insert into status values (4,'Task is closed or complete.', 'CLOSED');
+
+
 

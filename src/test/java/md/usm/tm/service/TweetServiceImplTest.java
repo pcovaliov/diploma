@@ -33,22 +33,6 @@ public class TweetServiceImplTest {
     public void setTweet() {
         tweet.setText(text);
     }
-//
-//    @Test
-//    public void testAddTweet() throws Exception {
-//        tweetDao.addTweet(tweet);
-//
-//        Assert.assertNotNull(tweetDao.getTweetById(tweet.getId()));
-//    }
-//
-//    @Test
-//    public void testUpdateTweet() throws Exception {
-//        tweetDao.addTweet(tweet);
-//        tweet.setText("TWEET JUNIT");
-//        tweetDao.updateTweet(tweet);
-//
-//        Assert.assertEquals(tweet, tweetDao.getTweetById(tweet.getId()));
-//    }
 
     @Test
     public void testDeleteTweetJunit() throws Exception {

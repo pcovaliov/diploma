@@ -54,10 +54,10 @@
 
             <div class="col-md-6 well" id="rightPanel">
                 <div class="row">
-                    <!--TWEET'S OF CURRENT USER-->
+                    <!--TASKS'S OF CURRENT USER-->
                     <div class="panel panel-default text-left">
 
-                        <c:forEach items="${usersTweets}" var="t">
+                        <c:forEach items="${usersTasks}" var="t">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="well" style="text-align:left">

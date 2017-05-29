@@ -54,5 +54,13 @@ public class TaskDaoImpl {
                 .getResultList().get(0);
     }
 
+    //getTaskByUserId
+
+    public List<Task> getTaskByUserId(int user_id) {
+        return sessionFactory.getCurrentSession()
+                .createNativeQuery("SELECT * FROM task WHERE user_id=:user_id", Task.class)
+                .setParameter("user_id", user_id)
+                .getResultList();
+    }
 
 }

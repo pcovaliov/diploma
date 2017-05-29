@@ -17,7 +17,7 @@
         <%@include file="../resources/css/profile.css"%>
         <%@include file="../resources/css/bootstrap.css"%>
         <%@include file="../resources/css/style.css"%>
-        .form-control{
+        .form-control {
             padding: 0px;
         }
 
@@ -34,9 +34,9 @@
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
 
-            $(window).scroll(function(){
+            $(window).scroll(function () {
                 if ($(this).scrollTop() > 100) {
                     $('.scrollup').fadeIn();
                 } else {
@@ -44,8 +44,8 @@
                 }
             });
 
-            $('.scrollup').click(function(){
-                $("html, body").animate({ scrollTop: 0 }, 600);
+            $('.scrollup').click(function () {
+                $("html, body").animate({scrollTop: 0}, 600);
                 return false;
             });
 
@@ -53,9 +53,9 @@
     </script>
 </head>
 <style>
-    .shirina{
-        width:33%;
-        valign:top;
+    .shirina {
+        width: 33%;
+        valign: top;
         padding: 10px;
         background-color: #eeeeee;
     }
@@ -65,7 +65,6 @@
 
 <body style="overflow-y: scroll;background-color: #eeeeee;">
 <jsp:include page="fragments/top.jsp"/>
-
 
 <div class="container text-center abc">
     <div class="row">
@@ -92,17 +91,26 @@
                         <div class="twPc-divStats">
                             <ul class="twPc-Arrange">
                                 <li class="twPc-ArrangeSizeFit">
-                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message code='tweets'/></span>
-                                    <span class="twPc-StatValue status_name">${usersTweets.size()}</span>
+                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message
+                                            code='tasks'/></span>
+                                    <span class="twPc-StatValue status_name">${tasks.size()}</span>
                                 </li>
                                 <li class="twPc-ArrangeSizeFit">
-                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message code='following'/></span>
-                                    <span class="twPc-StatValue status_name">${ifollow.size()}</span>
+                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message
+                                            code='projects'/></span>
+                                    <span class="twPc-StatValue status_name">${projects.size()}</span>
                                 </li>
                                 <li class="twPc-ArrangeSizeFit">
-                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message code='followers'/></span>
-                                    <span class="twPc-StatValue status_name">${followMe.size()}</span>
+                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message
+                                            code='periods'/></span>
+                                    <span class="twPc-StatValue status_name">${periods.size()}</span>
                                 </li>
+                            </ul>
+                            <ul class="twPc-Arrange">
+                                <li><button type="button" class="btn btn-success"><spring:message
+                                        code='newproject'/></button></li>
+                                <li><button type="button" class="btn btn-success"><spring:message
+                                        code='newperiod'/></button></li>
                             </ul>
                         </div>
                     </div>
@@ -111,216 +119,78 @@
         </div>
 
         <ul class="nav nav-tabs  col-sm-6">
-            <li class="active"><a href="#home"><spring:message code='tweets'/></a></li>
-            <li><a href="#menu1"><spring:message code='following'/></a></li>
-            <li><a href="#menu2"><spring:message code='followers'/></a></li>
+            <li class="active"><a href="#projects"><spring:message code='projects'/></a></li>
+            <li><a href="#periods"><spring:message code='periods'/></a></li>
         </ul>
 
         <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-
+            <div id="projects" class="tab-pane fade in active">
 
                 <!-- MIDDLE PART -->
                 <div class="col-sm-6"><br>
-                    <div id="test-id">
-                        <c:forEach items="${usersTweets}" var="t" varStatus="status">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="well reply_wrap" style="text-align:left">
-                                        <div class="col-sm-2 reply-image">
-                                            <img src="${t.user.avatar}" class="reply-img" height="55" width="55" alt="Avatar">
-                                        </div>
-                                            <div class="reply_text">
-                                                    <input type="hidden"
-                                                           name="${_csrf.parameterName}"
-                                                           value="${_csrf.token}"/>
-                                                    <input type="hidden" id="id" name="id"/>
-                                                        <span class="reply_text"
-                                                              style="text-align: left; font-weight: bold">${t.user.username}</span>
-                                            <span class="reply_footer pull-right">
-                                                <small>${t.postDateTime.toLocalDate()}
-                                                        ${t.postDateTime.toLocalTime().withNano(0)}
-                                                </small>
-                                            </span>
-
-                                                    <span style="font-size:larger; padding-bottom: 10px; padding-top: 10px; border: none; overflow: hidden; height: auto; box-shadow: none; resize: none; "
-                                                     class="form-control">${t.text}</span>
-
-                                                <c:if test="${t.image!=null}">
-                                                    <c:if test="${!t.image.equals('')}">
-                                                        <span width="80%" class="pull-right" style="padding-bottom: 10px">
-                                                        <img width="100%" src="<c:url value="/attachemnts/" />${t.image}"></c:if></span>
-                                                </c:if>
-
-                                                 <span onclick="sweetDelTwit(${t.id});"
-                                                       class="pull-right btn btn-default btn-xs glyphicon glyphicon-trash"></span>
-                                            <a class="btn btn-warning btn-xs glyphicon glyphicon-pencil"
-                                               href="${pageContext.request.contextPath}/user/profile/edittweet/${t.id}#myModal">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                        <jsp:include page="modal.jsp"/>
-                    </div>
+                    <table class="table table-striped">
+                        <tr class="info">
+                            <td><spring:message code='id'/></td>
+                            <td><spring:message code='projectname'/></td>
+                            <td><spring:message code='shortname'/></td>
+                            <td><spring:message code='actions'/></td>
+                        </tr>
+                        <div id="project-display-id">
+                            <c:forEach items="${projects}" var="project" varStatus="status">
+                                <tr>
+                                    <td> ${project.id}</td>
+                                    <td> ${project.projectName}</td>
+                                    <td> ${project.shortName}</td>
+                                    <td>
+                                        <button onclick="location.href='/user/profile/editProject/${project.id}';"
+                                                type="button" class="btn btn-info"><spring:message
+                                                code='editproject'/></button>
+                                        <button onclick="location.href='/user/profile/deleteProject/${project.id}';"
+                                                type="button" class="btn btn-danger"><spring:message
+                                                code='deleteproject'/></button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </div>
+                    </table>
                 </div>
             </div>
 
-            <div id="menu1" class="tab-pane fade">
+            <div id="periods" class="tab-pane fade">
                 <%--<h3>Following</h3>--%>
-                <div class="col-sm-9"  style="text-align: center;">
+                <div class="col-sm-9" style="text-align: center;">
                     <div id="refresh">
                         <br>
 
-                        <div>
-                            <div class="panel panel-default text-left"
-                                 style=" background-color: #eeeeee; border-color: #eeeeee; -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0);">
-                                <div>
-                                    <table width="100%">
+                        <!-- MIDDLE PART -->
+                        <div class="col-sm-6"><br>
+                            <table class="table table-striped">
+                                <tr class="info">
+                                    <td><spring:message code='id'/></td>
+                                    <td><spring:message code='projectname'/></td>
+                                    <td><spring:message code='shortname'/></td>
+                                    <td><spring:message code='actions'/></td>
+                                </tr>
+                                <div id="period-display-id">
+                                    <c:forEach items="${periods}" var="period" varStatus="status">
                                         <tr>
-                                            <td width="33%" valign="top"                                              style="padding: 10px; background-color: #eeeeee">
-                                                <c:forEach items="${ifollow}" var="v" begin="0" step="3">
-                                                    <div class="twPc-div">
-                                                        <a class="twPc-bg twPc-block"></a>
-
-                                                        <div>
-                                                            <div class="twPc-button">
-                                                                <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
-                                                                <span class="pull-right btn btn-danger btn-xs"
-                                                                      onclick="sweetUnf('${v.username}')">- <spring:message code='Unfollow'/></span>
-
-                                                                <p></p>
-
-                                                                <br>
-                                                                <!-- Twitter Button -->
-                                                            </div>
-
-                                                            <a title="${v.username}" href="/user/profile/${v.username}"
-                                                               class="twPc-avatarLink">
-                                                                <img alt="${v.username}"
-                                                                     src="${v.avatar}"
-                                                                     class="twPc-avatarImg">
-                                                            </a>
-
-                                                            <div class="twPc-divUser"
-                                                                 onclick="location.href='/user/profile/${v.username}';"
-                                                                 style="cursor:pointer;">
-                                                                <div class="twPc-divName">
-                                                                    <small style="color: #d58512; font-size: x-small">
-                                                                        <a href="/user/profile/${v.username}">@${v.username.toUpperCase()}</a>
-                                                                    </small>
-                                                                    <br>
-                                                                    <a href="/user/profile/${v.username}">${v.first_name} ${v.last_name}</a>
-                                                                    <br>
-                                                                    <br>
-
-                                                                    <p class="text-primary small"
-                                                                       style="text-align: center; ">${v.description}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </c:forEach>
-                                            </td>
-
-                                            <td width="33%" valign="top" style="padding: 10px; background-color: #eeeeee">
-                                                <c:forEach items="${ifollow}" var="v" begin="1" step="3">
-                                                    <div class="twPc-div" id="${v.username}">
-                                                        <a class="twPc-bg twPc-block"></a>
-
-                                                        <div>
-                                                            <div class="twPc-button">
-                                                                <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
-                                                                <span class="pull-right btn btn-danger btn-xs"
-                                                                      onclick="sweetUnf('${v.username}')">- <spring:message code='Unfollow'/></span>
-
-                                                                <p></p>
-                                                                <br>
-                                                                <!-- Twitter Button -->
-                                                            </div>
-
-                                                            <a title="${v.username}" href="/user/profile/${v.username}"
-                                                               class="twPc-avatarLink">
-                                                                <img alt="${v.username}"
-                                                                     src="${v.avatar}"
-                                                                     class="twPc-avatarImg">
-                                                            </a>
-
-                                                            <div class="twPc-divUser"
-                                                                 onclick="location.href='/user/profile/${v.username}';"
-                                                                 style="cursor:pointer;">
-                                                                <div class="twPc-divName">
-                                                                    <small style="color: #d58512; font-size: x-small">
-                                                                        <a href="/user/profile/${v.username}">@${v.username.toUpperCase()}</a>
-                                                                    </small>
-                                                                    <br>
-                                                                    <a href="/user/profile/${v.username}">${v.first_name} ${v.last_name}</a>
-                                                                    <br>
-                                                                    <br>
-
-                                                                    <p class="text-primary small"
-                                                                       style="text-align: center; ">${v.description}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </c:forEach>
-                                            </td>
-
-                                            <td width="33%" valign="top"
-                                                style="padding: 10px; background-color: #eeeeee">
-                                                <c:forEach items="${ifollow}" var="v" begin="2" step="3">
-                                                    <div class="twPc-div">
-                                                        <a class="twPc-bg twPc-block"></a>
-
-
-                                                        <div>
-                                                            <div class="twPc-button">
-                                                                <!-- Twitter Button | you can get from: https://about.twitter.com/tr/resources/buttons#follow -->
-
-                                                                <span class="pull-right btn btn-danger btn-xs"
-                                                                      onclick="sweetUnf('${v.username}');">- <spring:message code='Unfollow'/></span>
-
-                                                                <p></p>
-                                                                <br>
-                                                                <!-- Twitter Button -->
-                                                            </div>
-
-                                                            <a title="${v.username}" href="/user/profile/${v.username}"
-                                                               class="twPc-avatarLink">
-                                                                <img alt="${v.username}"
-                                                                     src="${v.avatar}"
-                                                                     class="twPc-avatarImg">
-                                                            </a>
-
-                                                            <div class="twPc-divUser"
-                                                                 onclick="location.href='/user/profile/${v.username}';"
-                                                                 style="cursor:pointer;">
-                                                                <div class="twPc-divName">
-                                                                    <small style="color: #d58512; font-size: x-small">
-                                                                        <a href="/user/profile/${v.username}">@${v.username.toUpperCase()}</a>
-                                                                    </small>
-                                                                    <br>
-                                                                    <a href="/user/profile/${v.username}">${v.first_name} ${v.last_name}</a>
-                                                                    <br>
-                                                                    <br>
-
-                                                                    <p class="text-primary small"
-                                                                       style="text-align: center; ">${v.description}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </c:forEach>
+                                            <td> ${period.id}</td>
+                                            <td> ${period.periodName}</td>
+                                            <td> ${period.startDate}</td>
+                                            <td> ${period.endDate}</td>
+                                            <td>
+                                                <button onclick="location.href='/user/profile/editPeriod/${period.id}';"
+                                                        type="button" class="btn btn-info"><spring:message
+                                                        code='editproject'/></button>
+                                                <button onclick="location.href='/user/profile/deletePeriod/${period.id}';"
+                                                        type="button" class="btn btn-danger"><spring:message
+                                                        code='deleteproject'/></button>
                                             </td>
                                         </tr>
-                                    </table>
+                                    </c:forEach>
+                                    <%--<jsp:include page="modal.jsp"/>--%>
                                 </div>
-                            </div>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -329,199 +199,74 @@
                 <%--<h3>Followers</h3>--%>
                 <div class="col-sm-9" style="text-align: center;">
                     <div>
-                        <br>
 
-                        <div>
-                            <div class="panel panel-default text-left"
-                                 style=" background-color: #eeeeee; border-color: #eeeeee; -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0);">
-                                <div>
-                                    <table width="100%">
-                                        <tr>
-                                            <td width="33%" valign="top"
-                                                style="padding: 10px; background-color: #eeeeee">
-                                                <c:forEach items="${followMe}" var="v" begin="0" step="3">
-
-                                                    <div class="twPc-div"
-                                                         onclick="location.href='/user/profile/${v.username}';"
-                                                         style="cursor:pointer;">
-                                                        <a class="twPc-bg twPc-block"> </a>
-
-                                                        <div>
-
-                                                            <a title="${v.username}" href="/user/profile/${v.username}"
-                                                               class="twPc-avatarLink">
-                                                                <img alt="${v.username}"
-                                                                     src="${v.avatar}"
-                                                                     class="twPc-avatarImg">
-                                                            </a>
-
-                                                            <div class="twPc-divUser">
-                                                                <div class="twPc-divName">
-                                                                    <small style="color: #d58512; font-size: x-small">
-                                                                        <a href="/user/profile/${v.username}">@${v.username.toUpperCase()}</a>
-                                                                    </small>
-                                                                    <br>
-                                                                    <a href="/user/profile/${v.username}">${v.first_name} ${v.last_name}</a>
-                                                                    <br>
-                                                                    <br>
-
-                                                                    <p class="text-primary small"
-                                                                       style="text-align: center; ">${v.description}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </c:forEach>
-                                            </td>
-
-                                            <td width="33%" valign="top"
-                                                style="padding: 10px; background-color: #eeeeee">
-                                                <c:forEach items="${followMe}" var="v" begin="1" step="3">
-
-                                                    <div class="twPc-div"
-                                                         onclick="location.href='/user/profile/${v.username}';"
-                                                         style="cursor:pointer;">
-                                                        <a class="twPc-bg twPc-block"> </a>
-
-                                                        <div>
-
-                                                            <a title="${v.username}" href="/user/profile/${v.username}"
-                                                               class="twPc-avatarLink">
-                                                                <img alt="${v.username}"
-                                                                     src="${v.avatar}"
-                                                                     class="twPc-avatarImg">
-                                                            </a>
-
-                                                            <div class="twPc-divUser">
-                                                                <div class="twPc-divName">
-                                                                    <small style="color: #d58512; font-size: x-small">
-                                                                        <a href="/user/profile/${v.username}">@${v.username.toUpperCase()}</a>
-                                                                    </small>
-                                                                    <br>
-                                                                    <a href="/user/profile/${v.username}">${v.first_name} ${v.last_name}</a>
-                                                                    <br>
-                                                                    <br>
-
-                                                                    <p class="text-primary small"
-                                                                       style="text-align: center; ">${v.description}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </c:forEach>
-                                            </td>
-
-                                            <td width="33%" valign="top"
-                                                style="padding: 10px; background-color: #eeeeee">
-                                                <c:forEach items="${followMe}" var="v" begin="2" step="3">
-
-                                                    <div class="twPc-div"
-                                                         onclick="location.href='/user/profile/${v.username}';"
-                                                         style="cursor:pointer;">
-                                                        <a class="twPc-bg twPc-block"> </a>
-
-                                                        <div>
-
-                                                            <a title="${v.username}" href="/user/profile/${v.username}"
-                                                               class="twPc-avatarLink">
-                                                                <img alt="${v.username}"
-                                                                     src="${v.avatar}"
-                                                                     class="twPc-avatarImg">
-                                                            </a>
-
-                                                            <div class="twPc-divUser">
-                                                                <div class="twPc-divName">
-                                                                    <small style="color: #d58512; font-size: x-small">
-                                                                        <a href="/user/profile/${v.username}">@${v.username.toUpperCase()}</a>
-                                                                    </small>
-                                                                    <br>
-                                                                    <a href="/user/profile/${v.username}">${v.first_name} ${v.last_name}</a>
-                                                                    <br>
-                                                                    <br>
-
-                                                                    <p class="text-primary small"
-                                                                       style="text-align: center; ">${v.description}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                </c:forEach>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+    <%--<script>--%>
+        <%--&lt;%&ndash;REMEMBER CURRENT TAB&ndash;%&gt;--%>
+        <%--$(document).ready(function () {--%>
+            <%--if (location.hash) {--%>
+                <%--$('a[href=' + location.hash + ']').tab('show');--%>
+            <%--}--%>
+            <%--$(document.body).on("click", "a[data-toggle]", function (event) {--%>
+                <%--location.hash = this.getAttribute("href");--%>
+            <%--});--%>
+        <%--});--%>
+        <%--$(window).on('popstate', function () {--%>
+            <%--var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");--%>
+            <%--$('a[href=' + anchor + ']').tab('show');--%>
+        <%--});--%>
 
-    <script>
-        <%--REMEMBER CURRENT TAB--%>
-        $(document).ready(function() {
-            if(location.hash) {
-                $('a[href=' + location.hash + ']').tab('show');
-            }
-            $(document.body).on("click", "a[data-toggle]", function(event) {
-                location.hash = this.getAttribute("href");
-            });
-        });
-        $(window).on('popstate', function() {
-            var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
-            $('a[href=' + anchor + ']').tab('show');
-        });
+        <%--function sweetUnf(username) {--%>
+<%--//            var username = $(this).data('unflw');--%>
+            <%--swal({--%>
+                <%--title: 'Are you sure?',--%>
+                <%--text: "You won't be able to revert this!",--%>
+                <%--type: 'warning',--%>
+                <%--showCancelButton: true,--%>
+                <%--confirmButtonColor: '#3085d6',--%>
+                <%--cancelButtonColor: '#d33',--%>
+                <%--confirmButtonText: 'Yes, unfollow this user!'--%>
 
-        function sweetUnf(username) {
-//            var username = $(this).data('unflw');
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, unfollow this user!'
+            <%--}).then(function () {--%>
+                <%--$.ajax({--%>
+                    <%--url: '/unfollow/' + username,--%>
+                    <%--data: username,--%>
+                    <%--dataType: 'text',--%>
+                    <%--type: 'GET',--%>
+                    <%--success: function (data) {--%>
+                        <%--$('#' + username).hide();--%>
+                        <%--$('#refresh').load(document.URL + ' #refresh');--%>
+                    <%--}--%>
+                <%--});--%>
+            <%--})--%>
+        <%--}--%>
 
-            }).then(function () {
-                $.ajax({
-                    url: '/unfollow/' + username,
-                    data:username,
-                    dataType: 'text',
-                    type: 'GET',
-                    success: function (data) {
-                        $('#'+username).hide();
-                        $('#refresh').load(document.URL +  ' #refresh');
-                    }
-                });
-            })
-        }
+        <%--function sweetDelTwit(id) {--%>
+            <%--swal({--%>
+                <%--title: 'Are you sure?',--%>
+                <%--text: "You won't be able to revert this!",--%>
+                <%--type: 'warning',--%>
+                <%--showCancelButton: true,--%>
+                <%--confirmButtonColor: '#3085d6',--%>
+                <%--cancelButtonColor: '#d33',--%>
+                <%--confirmButtonText: 'Yes, delete it!'--%>
+            <%--}).then(function () {--%>
 
-        function sweetDelTwit(id) {
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(function () {
+                <%--location.href = '/tweet/deleteTweet/' + id;--%>
 
-                location.href = '/tweet/deleteTweet/' + id;
+            <%--})--%>
+        <%--}--%>
+    <%--</script>--%>
+    <%--<script>--%>
 
-            })
-        }
-    </script>
-    <script>
-
-    </script>
-    <a href="#" class="scrollup">Наверх</a>
+    <%--</script>--%>
+    <%--<a href="#" class="scrollup">Наверх</a>--%>
 </body>
 </html>
 

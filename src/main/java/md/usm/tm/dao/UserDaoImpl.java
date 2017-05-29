@@ -33,7 +33,6 @@ public class UserDaoImpl {
 
     public void updateUser(User user) {
         Session session = sessionFactory.getCurrentSession();
-        user.setUsersIFollow(user.getUsersIFollow());
         session.update(user);
         logger.info("User was updated");
     }

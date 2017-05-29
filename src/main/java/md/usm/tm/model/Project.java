@@ -1,6 +1,7 @@
 package md.usm.tm.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by pcovaliov on 5/15/2017.
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "project")
-public class Project {
+public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,5 +63,28 @@ public class Project {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        if (id != project.id) return false;
+        if (projectName != null ? !projectName.equals(project.projectName) : project.projectName != null) return false;
+        if (shortName != null ? !shortName.equals(project.shortName) : project.shortName != null) return false;
+        return user != null ? user.equals(project.user) : project.user == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (projectName != null ? projectName.hashCode() : 0);
+        result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        return result;
     }
 }

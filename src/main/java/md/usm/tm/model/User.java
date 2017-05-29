@@ -2,9 +2,6 @@ package md.usm.tm.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -97,21 +94,6 @@ public class User implements Serializable {
     @OrderBy(value = "postDateTime DESC")
     private List<Task> allTasks = new ArrayList<>();
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 30)
-    @JoinTable(name = "followers", joinColumns = @JoinColumn(name = "follower_id"),
-            inverseJoinColumns = @JoinColumn(name = "followed_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"followed_id", "follower_id"}))
-    private List<User> usersIFollow = new ArrayList<>();
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "usersIFollow", fetch = FetchType.LAZY)
-    @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 30)
-    private List<User> myFollowers = new ArrayList<>();
-
     public User() {
     }
 
@@ -179,28 +161,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public List<Task> getAllTweets() {
+    public List<Task> getAllTasks() {
         return allTasks;
     }
 
-    public void setAllTweets(List<Task> allTweets) {
-        this.allTasks = allTweets;
-    }
-
-    public List<User> getUsersIFollow() {
-        return usersIFollow;
-    }
-
-    public void setUsersIFollow(List<User> usersIFollow) {
-        this.usersIFollow = usersIFollow;
-    }
-
-    public List<User> getMyFollowers() {
-        return myFollowers;
-    }
-
-    public void setMyFollowers(List<User> myFollowers) {
-        this.myFollowers = myFollowers;
+    public void setAllTasks(List<Task> allTaskss) {
+        this.allTasks = allTasks;
     }
 
     public String getAvatar() {

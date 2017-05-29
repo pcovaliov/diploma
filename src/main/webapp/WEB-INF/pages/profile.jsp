@@ -51,92 +51,21 @@
 <body style="overflow-y: scroll;">
 <jsp:include page="fragments/top.jsp"/>
 
-<div class="container text-center">
-    <div class="row">
-        <%--Left panel--%>
-        <div class="col-sm-3 well abc" style="background-color: #71c3ec;" id="leftPanel">
-            <div class="row">
-                <div class="col-md-12" style="margin: 0 auto;">
-                    <div>
-                        <img src="${user.avatar}"
-                             alt="User's avatar" class="img-circle" height="150" width="150">
-                        <br>
-                        <br>
-
-                        <p>
-                            <small class="status_name">@${user.username.toUpperCase()}</small>
-                        </p>
-                        <h4 class="status_name">${user.first_name} ${user.last_name}</h4>
-
-                        <p class="status_name">${user.description}</p>
-
-                        <div class="twPc-divStats">
-                            <ul class="twPc-Arrange">
-                                <li class="twPc-ArrangeSizeFit">
-                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message code='tweets'/></span>
-                                    <span class="twPc-StatValue status_name">${usersTweets.size()}</span>
-                                </li>
-                                <li class="twPc-ArrangeSizeFit">
-                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message code='following'/></span>
-                                    <span class="twPc-StatValue status_name">${ifollow_counter}</span>
-                                </li>
-                                <li class="twPc-ArrangeSizeFit">
-                                    <span class="twPc-StatLabel twPc-block status_name"><spring:message code='followers'/></span>
-                                    <span class="twPc-StatValue status_name">${followMe_counter}</span>
-                                </li>
-                            </ul>
-                            <br>
-                            <c:if test="${isFollowed==0}">
-                                <input type="hidden" id="flw" value="${user.username}">
-                                <span class="pull-right btn btn-warning btn-sm" onclick="follow()">+
-                                    Follow</span>
-                            </c:if>
-
-                            <c:if test="${isFollowed!=0}">
-                                <input type="hidden" id="unflw" value="${user.username}">
-                                <span class="pull-right btn btn-danger btn-sm"
-                                      onclick="sweetUnf()">- <spring:message code='Unfollow'/></span>
-                            </c:if>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MIDDLE PART -->
-        <div class="col-sm-6 abc">
-            <div id="test-id">
-                <c:forEach items="${usersTweets}" var="t" varStatus="status">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="well reply_wrap" style="text-align:left">
-                                <div class="col-sm-2 reply-image">
-                                    <img src="${t.user.avatar}" class="reply-img" height="55" width="55" alt="Avatar">
-                                </div>
-                                <div class="reply_text">
-                                    <input type="hidden" id="id" name="id">
-                            <span style="text-align: left; font-weight: bold">
-                                <a href="/user/profile/${t.user.username}"> ${t.user.username} </a>
-                            </span>
-                                    <span class="reply_footer pull-right"><small>${t.postDateTime.toLocalDate()} ${t.postDateTime.toLocalTime().withNano(0)}</small></span>
-                                    <br>
-                                    <span>
-                                    <p style="font-size: larger; padding-bottom: 10px; padding-top: 10px;">${t.text}</p>
-                                    </span>
-
-                                    <c:if test="${t.image!=null}">
-                                        <c:if test="${!t.image.equals('')}">
-                                            <span width="80%" class="pull-right">
-                                            <img width="100%" src="<c:url value="/attachemnts/" />${t.image}"></c:if></span>
-                                    </c:if>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
+            TESTTEST<br/>
     </div>
 </div>
 

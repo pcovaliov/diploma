@@ -39,5 +39,9 @@ public class TaskServiceImpl {
         return tweetDao.getTaskById(id);
     }
 
+    public List<Task> getTaskByUserId(int id) {
+        return tweetDao.getTaskByUserId(id);
+    }
+
 
 }
