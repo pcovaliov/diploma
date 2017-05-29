@@ -1,6 +1,7 @@
 package md.usm.tm.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by pcovaliov on 5/15/2017.
@@ -8,21 +9,25 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "status")
-public class Status {
+public class Status implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.ORDINAL)
+    private StatusEnum status;
 
     @Column(name = "description")
     private String description;
 
-    public Status(String status, String description) {
+    public Status(StatusEnum status, String description) {
         this.status = status;
         this.description = description;
+    }
+    public Status(StatusEnum status) {
+        this.status = status;
     }
 
     public int getId() {
@@ -34,11 +39,11 @@ public class Status {
         this.id = id;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

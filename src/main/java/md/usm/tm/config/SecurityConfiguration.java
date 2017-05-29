@@ -55,6 +55,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/project/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/task/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/period").access("hasRole('ROLE_USER')")
+                .antMatchers("/projectform").access("hasRole('ROLE_USER')")
+                .antMatchers("/periodform").access("hasRole('ROLE_USER')")
                 .and().formLogin().loginPage("/login")
                 .defaultSuccessUrl("/task")
                 .failureUrl("/login/badcredentials")

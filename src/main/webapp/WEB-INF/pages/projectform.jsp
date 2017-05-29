@@ -57,51 +57,24 @@
 <div class="container text-center">
 
     <div class="col-md-8 col-md-offset-2 abc">
-        <form:form method="POST" action="saveTask">
+        <form:form method="POST" action="/saveProject" modelAttribute="project" class="form-signin">
             <div class="form-group">
-                <label for="taskName">Task Name</label>
-                <form:input type="text" path="taskName" class="form-control" id="taskName" placeholder="Task Name"
+                <label for="projectName">Project name</label>
+                <form:input type="text" path="projectName" class="form-control" id="projectName" placeholder="Project Name"
                             maxlength="50" minlength="3"/>
-                <small id="emailHelp" class="form-text text-muted">This will be used as task code/name.
+                <small id="emailHelp" class="form-text text-muted">Project Name.
                 </small>
             </div>
-
+            <div class="form-group">
+                <label for="projectShortName">Project Short Name</label>
+                <form:input type="text" path="shortName" class="form-control" id="projectShortName" placeholder="Project Short Name"
+                            maxlength="3" minlength="3"/>
+                <small id="emailHelp" class="form-text text-muted">Lenght should be 3.
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <form:input type="hidden" path="id" name="id" value="${project.id}"/>
         </form:form>
-        <%--<form:form method="POST" action="/saveTask" class="form-signin">--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="taskName">Task Name</label>--%>
-        <%--<form:input type="text" path="taskName" class="form-control" id="taskName" placeholder="Task Name"--%>
-        <%--maxlength="50" minlength="3"/>--%>
-        <%--<small id="emailHelp" class="form-text text-muted">This will be used as task code/name.--%>
-        <%--</small>--%>
-        <%--</div>--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="projectList">Project Name</label>--%>
-        <%--<form:select class="form-control" id="projectList" path="project_id">--%>
-        <%--<form:options items="${projectList}" itemValue="id" itemLabel="projectName"/>--%>
-        <%--</form:select>--%>
-
-        <%--</div>--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="periodList">Period</label>--%>
-        <%--<form:select class="form-control" id="periodList" path="period_id">--%>
-        <%--<form:options items="${periodList}" itemValue="id" itemLabel="periodName"/>--%>
-        <%--</form:select>--%>
-        <%--</div>--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="statusList">Period</label>--%>
-        <%--<form:select class="form-control" id="statusList" path="status_id">--%>
-        <%--<form:options items="${statusList}" itemValue="status" itemLabel="desription"/>--%>
-        <%--</form:select>--%>
-        <%--</div>--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="exampleTextarea">Example textarea</label>--%>
-        <%--<form:textarea class="form-control" id="exampleTextarea" rows="3" path="taskText"--%>
-        <%--maxlength="250"></form:textarea>--%>
-        <%--</div>--%>
-        <%--<button type="submit" class="btn btn-primary">Submit</button>--%>
-        <%--<form:input type="hidden" path="task_id" name="task_id" value="${task_id}"/>--%>
-        <%--</form:form>--%>
     </div>
 </div>
 </body>

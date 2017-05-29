@@ -4,6 +4,7 @@ import md.usm.tm.dao.TaskDaoImpl;
 import md.usm.tm.model.Task;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/dispatcher-servlet.xml")
 @Service
 @Transactional
+@Ignore
 public class TweetServiceImplTest {
 
     private static final String text = "JUNIT TWEET";

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/dispatcher-servlet.xml")
 @Service
 @Transactional
+@Ignore
 public class UserServiceImplTest {
 
     private static final String username = "Superman";

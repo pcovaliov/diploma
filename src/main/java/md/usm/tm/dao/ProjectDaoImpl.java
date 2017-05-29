@@ -3,12 +3,11 @@ package md.usm.tm.dao;
 import md.usm.tm.model.Project;
 import org.apache.log4j.Logger;
 import org.apache.log4j.spi.RootLogger;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -35,11 +34,11 @@ public class ProjectDaoImpl extends AbstractGenericDao<Project, Integer> {
     }
 
     public void deleteProjectById(int id) {
-        sessionFactory.getCurrentSession().delete(getById(id));
+        getCurrentSession().delete(getById(id));
     }
 
     @Override
-    protected EntityManager getEntityManager() {
-        return sessionFactory.openSession().getEntityManagerFactory().createEntityManager();
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 }

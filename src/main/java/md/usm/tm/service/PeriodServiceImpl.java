@@ -16,9 +16,25 @@ import java.util.List;
 public class PeriodServiceImpl {
 
     @Autowired
-    PeriodDaoImpl periodDao;
+    private PeriodDaoImpl periodDao;
 
-    public List<Period> getAllUsersPeriods(int userId){
-        return periodDao.getAllUsersProjects(userId);
+    public List<Period> getAllUsersPeriods(int userId) {
+        return periodDao.getAllUsersPeriods(userId);
+    }
+
+    public void deleteProjectById(int id) {
+        periodDao.deletePeriodById(id);
+    }
+
+    public Period getById(int id) {
+        return periodDao.getById(id);
+    }
+
+    public Period save(Period period) {
+        return periodDao.persist(period);
+    }
+
+    public Period update(Period period) {
+        return periodDao.update(period);
     }
 }

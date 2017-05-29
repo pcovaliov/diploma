@@ -1,14 +1,18 @@
 package md.usm.tm.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.Date;
 
 /**
  * Created by pcovaliov on 5/15/2017.
  */
 @Entity
 @Table(name = "period")
-public class Period {
+public class Period implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,10 +21,12 @@ public class Period {
     private String periodName;
 
     @Column(name = "start_date")
-    private OffsetDateTime startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startDate;
 
     @Column(name = "end_date")
-    private OffsetDateTime endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -29,7 +35,7 @@ public class Period {
     public Period() {
     }
 
-    public Period(String periodName, OffsetDateTime startDate, OffsetDateTime endDate) {
+    public Period(String periodName, Date startDate, Date endDate) {
         this.periodName = periodName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -59,19 +65,53 @@ public class Period {
         this.periodName = periodName;
     }
 
-    public OffsetDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(OffsetDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public OffsetDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(OffsetDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Period)) return false;
+
+        Period period = (Period) o;
+
+        if (getId() != period.getId()) return false;
+        if (!getPeriodName().equals(period.getPeriodName())) return false;
+        if (!getStartDate().equals(period.getStartDate())) return false;
+        if (!getEndDate().equals(period.getEndDate())) return false;
+        return getUser().equals(period.getUser());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getPeriodName().hashCode();
+        result = 31 * result + getStartDate().hashCode();
+        result = 31 * result + getEndDate().hashCode();
+        result = 31 * result + getUser().hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Period{" +
+                "periodName='" + periodName + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }

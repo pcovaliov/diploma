@@ -32,9 +32,6 @@ public class ProfileController extends BaseController{
     @Autowired
     private PeriodServiceImpl periodService;
 
-    private void init(Model model) {
-
-    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showCurUserProfile() {
@@ -75,21 +72,21 @@ public class ProfileController extends BaseController{
 
     @RequestMapping(value = "/edittask/{id}", method = RequestMethod.GET)
     public String editTask(@PathVariable int id, @RequestParam String text) {
-        Task tweet = taskService.getTaskById(id);
-        tweet.setText(text);
-        taskService.updateTweet(tweet);
-        return "redirect:/user/profile/";
-    }
-
-    @RequestMapping(value = "editProject/{id}", method =  RequestMethod.POST)
-    public String editProject(@PathVariable int id){
+        Task task = taskService.getTaskById(id);
+        task.setText(text);
+        taskService.update(task);
         return "redirect:/user/profile/";
     }
 
     @RequestMapping(value = "/deleteProject/{id}", method =  RequestMethod.GET)
     public String deleteProject(@PathVariable int id){
-        Project project = projectService.getById(id);
-        projectService.deleteProject(project);
+        projectService.deleteProject(id);
+        return "redirect:/user/profile/";
+    }
+
+    @RequestMapping(value = "/deletePeriod/{id}", method =  RequestMethod.GET)
+    public String deletePeriod(@PathVariable int id){
+        periodService.deleteProjectById(id);
         return "redirect:/user/profile/";
     }
 }

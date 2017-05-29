@@ -107,10 +107,12 @@
                                 </li>
                             </ul>
                             <ul class="twPc-Arrange">
-                                <li><button type="button" class="btn btn-success"><spring:message
-                                        code='newproject'/></button></li>
-                                <li><button type="button" class="btn btn-success"><spring:message
-                                        code='newperiod'/></button></li>
+                                <li><button type="button" class="btn btn-success"
+                                            onclick="location.href='/user/project/createProject'">
+                                    <spring:message code='newproject'/></button></li>
+                                <li><button type="button" class="btn btn-success"
+                                            onclick="location.href='/user/profile/createPeriod'">
+                                    <spring:message code='newperiod'/></button></li>
                             </ul>
                         </div>
                     </div>
@@ -142,7 +144,7 @@
                                     <td> ${project.projectName}</td>
                                     <td> ${project.shortName}</td>
                                     <td>
-                                        <button onclick="location.href='/user/profile/editProject/${project.id}';"
+                                        <button onclick="location.href='/user/project/editProject/${project.id}';"
                                                 type="button" class="btn btn-info"><spring:message
                                                 code='editproject'/></button>
                                         <button onclick="location.href='/user/profile/deleteProject/${project.id}';"
@@ -163,12 +165,13 @@
                         <br>
 
                         <!-- MIDDLE PART -->
-                        <div class="col-sm-6"><br>
+                        <div class="col-sm-10"><br>
                             <table class="table table-striped">
                                 <tr class="info">
                                     <td><spring:message code='id'/></td>
-                                    <td><spring:message code='projectname'/></td>
-                                    <td><spring:message code='shortname'/></td>
+                                    <td><spring:message code='periodname'/></td>
+                                    <td><spring:message code='startdate'/></td>
+                                    <td><spring:message code='enddate'/></td>
                                     <td><spring:message code='actions'/></td>
                                 </tr>
                                 <div id="period-display-id">

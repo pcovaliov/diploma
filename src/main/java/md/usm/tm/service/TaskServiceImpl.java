@@ -18,29 +18,31 @@ import java.util.List;
 public class TaskServiceImpl {
 
     @Autowired
-    private TaskDaoImpl tweetDao;
+    private TaskDaoImpl taskDao;
 
     public Task addTask(Task task) {
-        return tweetDao.addTask(task);
+        return taskDao.addTask(task);
     }
 
-    public void updateTweet(Task task) {
-        tweetDao.updateTask(task);
+    public Task save(Task task) { return taskDao.persist(task); }
+
+    public void update(Task task) {
+        taskDao.update(task);
     }
 
     public Task deleteTask(Task task) {
         if (task.getUser().getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
-            return tweetDao.deleteTask(task);
+            return taskDao.deleteTask(task);
         }
         return null;
     }
 
     public Task getTaskById(int id) {
-        return tweetDao.getTaskById(id);
+        return taskDao.getTaskById(id);
     }
 
     public List<Task> getTaskByUserId(int id) {
-        return tweetDao.getTaskByUserId(id);
+        return taskDao.getTaskByUserId(id);
     }
 
 

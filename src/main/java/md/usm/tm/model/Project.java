@@ -87,4 +87,12 @@ public class Project implements Serializable {
         result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectName='" + projectName + '\'' +
+                ", shortName='" + shortName + '\'' +
+                '}';
+    }
 }

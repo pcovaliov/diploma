@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 /**
  * Created by pcovaliov on 5/29/2017.
@@ -22,12 +23,15 @@ public class ProjectServiceImpl {
         return  projectDao.getAllUsersProjects(userId);
     }
 
-    public void deleteProject(Project project){
-//        projectDao.delete(project);
-        projectDao.deleteProjectById(project.getId());
+    public void deleteProject(int id){
+        projectDao.deleteProjectById(id);
     }
 
     public Project getById(int id){
         return projectDao.getById(id);
     }
+
+    public Project save(Project project) {return projectDao.persist(project);}
+
+    public Project update(Project project) {return projectDao.update(project);}
 }

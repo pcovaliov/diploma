@@ -1,7 +1,5 @@
 package md.usm.tm.controller;
 
-import md.usm.tm.model.Period;
-import md.usm.tm.model.Project;
 import md.usm.tm.model.Task;
 import md.usm.tm.model.User;
 import md.usm.tm.service.TaskServiceImpl;
@@ -20,16 +18,16 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 @RestController
-public class RestService extends BaseController{
+public class RestService extends BaseController {
 
     @Autowired
     private UserServiceImpl userService;
 
     @Autowired
-    private TaskServiceImpl tweetService;
+    private TaskServiceImpl taskService;
 
     @RequestMapping(value = "/allusers/", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> listAllTweets() {
+    public ResponseEntity<List<User>> listAllTasks() {
         List<User> users = userService.getAllUsers();
 
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
@@ -81,12 +79,12 @@ public class RestService extends BaseController{
     }
 
     @RequestMapping(value = "/addtask", method = RequestMethod.POST)
-    public String addTweet(@RequestParam String text, @RequestParam String image) {
-        Task tweet = new Task(text, userService.getUserByName(getPrincipal()), new Project(), new Period());
+    public String addTask(@RequestParam String text, @RequestParam String image) {
+        Task task = new Task();
         if (image != null && !image.isEmpty()) {
-            tweet.setImage(image);
+            task.setImage(image);
         }
-        tweetService.addTask(tweet);
+        taskService.addTask(task);
         return "redirect:/main";
     }
 

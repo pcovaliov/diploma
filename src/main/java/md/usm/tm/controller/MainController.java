@@ -1,7 +1,5 @@
 package md.usm.tm.controller;
 
-import md.usm.tm.model.Period;
-import md.usm.tm.model.Project;
 import md.usm.tm.model.Task;
 import md.usm.tm.model.User;
 import md.usm.tm.service.TaskServiceImpl;
@@ -38,9 +36,9 @@ public class MainController extends BaseController {
         User currentUser = userService.getUserByName(getPrincipal());
 
         for (int i = 0; i < 20; i++) {
-            todoTasks.add(new Task("Task01", currentUser, new Project(), new Period()));
-            todoTasks.add(new Task("Task01", currentUser, new Project(), new Period()));
-            todoTasks.add(new Task("Task01", currentUser, new Project(), new Period()));
+            todoTasks.add(new Task());
+            todoTasks.add(new Task());
+            todoTasks.add(new Task());
         }
 
         model.addAttribute("todo", todoTasks);
@@ -65,7 +63,7 @@ public class MainController extends BaseController {
 
     @RequestMapping(value = "/addtask", method = RequestMethod.POST)
     public String addTask(@RequestParam String text, @RequestParam String image) {
-        Task task = new Task(text, userService.getUserByName(getPrincipal()), new Project(), new Period());
+        Task task = new Task();
         if (image != null && !image.isEmpty()) {
             task.setImage(image);
         }

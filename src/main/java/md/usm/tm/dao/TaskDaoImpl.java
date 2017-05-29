@@ -16,12 +16,16 @@ import java.util.List;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class TaskDaoImpl {
+public class TaskDaoImpl extends AbstractGenericDao<Task, Integer>{
 
     private static final Logger logger = RootLogger.getLogger(TaskDaoImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    protected TaskDaoImpl() {
+        super(Task.class);
+    }
 
     public Task addTask(Task task) {
         Session session = sessionFactory.getCurrentSession();
@@ -54,7 +58,6 @@ public class TaskDaoImpl {
                 .getResultList().get(0);
     }
 
-    //getTaskByUserId
 
     public List<Task> getTaskByUserId(int user_id) {
         return sessionFactory.getCurrentSession()
@@ -63,4 +66,8 @@ public class TaskDaoImpl {
                 .getResultList();
     }
 
+    @Override
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
 }
