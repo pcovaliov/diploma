@@ -56,9 +56,9 @@
 <jsp:include page="fragments/top.jsp"/>
 <div class="container text-center">
 
-    <div class="col-md-8 col-md-offset-2 abc">
+    <div class="col-md-8 col-md-offset-2 abc" style="border-top-color: red" style="margin-top: 50px;">
         <form:form method="POST" action="/saveProject" modelAttribute="project" class="form-signin">
-            <div class="form-group">
+            <div class="form-group" >
                 <label for="projectName">Project name</label>
                 <form:input type="text" path="projectName" class="form-control" id="projectName" placeholder="Project Name"
                             maxlength="50" minlength="3"/>

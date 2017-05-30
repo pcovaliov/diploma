@@ -1,10 +1,7 @@
 package md.usm.tm.controller;
 
 import md.usm.tm.model.*;
-import md.usm.tm.service.PeriodServiceImpl;
-import md.usm.tm.service.ProjectServiceImpl;
-import md.usm.tm.service.TaskServiceImpl;
-import md.usm.tm.service.UserServiceImpl;
+import md.usm.tm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +33,9 @@ public class TaskController extends BaseController {
     @Autowired
     private TaskServiceImpl taskService;
 
+    @Autowired
+    private StatusServiceImpl statusService;
+
     private void init(Model model) {
         User currentUser = userService.getUserByName(getPrincipal());
 //        List<Project> projectList = projectService.getAllUsersProjects(currentUser.getId());
@@ -43,10 +44,15 @@ public class TaskController extends BaseController {
 //            projectMap.put( ((Integer)project.getId()).toString(), project);
 //        }
 
+        List<String> statusList = new ArrayList<>();
+
+        for (StatusEnum status : StatusEnum.values()){
+            statusList.add(status.toString());
+        }
         model.addAttribute("projectList", projectService.getAllUsersProjects(currentUser.getId()));
         model.addAttribute("periodList", periodService.getAllUsersPeriods(currentUser.getId()));
+        model.addAttribute("statusList", statusList);
 
-        model.addAttribute("taskName");
 //        model.addAttribute("project_id");
 //        model.addAttribute("period_id");
 //        model.addAttribute("taskText");
@@ -63,14 +69,13 @@ public class TaskController extends BaseController {
 
 
     @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
-    public String saveTask(Model model) {
-        Task task = new Task();
+    public String saveTask(Model model,  @ModelAttribute("task") Task task) {
         User user = userService.getUserByName(getPrincipal());
         task.setUser(user);
         if (task.getId() != 0) {
             taskService.update(task);
         } else {
-            task.setStatus(new Status(StatusEnum.NOT_STARTED));
+            task.setStatus(new Status("NOT_STARTED"));
             taskService.save(task);
         }
         return "main";

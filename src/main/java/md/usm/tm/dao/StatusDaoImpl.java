@@ -8,13 +8,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
 /**
  * Created by pcovaliov on 5/28/2017.
  */
 @Repository
-public class StatusDaoImpl extends AbstractGenericDao<Status,Integer>{
+public class StatusDaoImpl extends AbstractGenericDao<Status, Integer> {
 
     private static final Logger logger = RootLogger.getLogger(StatusDaoImpl.class);
 
@@ -25,9 +25,14 @@ public class StatusDaoImpl extends AbstractGenericDao<Status,Integer>{
         super(Status.class);
     }
 
-
     @Override
     protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
+    }
+
+    public List<Status> getAll() {
+        return sessionFactory.getCurrentSession()
+                .createNamedQuery("SELECT * FROM status", Status.class)
+                .getResultList();
     }
 }

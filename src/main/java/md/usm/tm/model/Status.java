@@ -15,18 +15,18 @@ public class Status implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.ORDINAL)
-    private StatusEnum status;
-
     @Column(name = "description")
     private String description;
 
-    public Status(StatusEnum status, String description) {
+    @Column(name = "status")
+    private String status;
+
+
+    public Status(String status, String description) {
         this.status = status;
         this.description = description;
     }
-    public Status(StatusEnum status) {
+    public Status(String status) {
         this.status = status;
     }
 
@@ -39,11 +39,11 @@ public class Status implements Serializable {
         this.id = id;
     }
 
-    public StatusEnum getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

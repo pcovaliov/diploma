@@ -153,12 +153,30 @@
 <body style="overflow-y: scroll;">
 
 <jsp:include page="fragments/top.jsp"/>
-<div class="container text-center">
+<div class="container text-center" >
 
     <!-- MIDDLE PART -->
-    <div class="col-sm-18 abc">
+    <div class="col-sm-18 abc" style="margin-top: 52px;">
         <div class="row">
             <div class="col-sm-3" style="background-color:lavender;">
+                <div style="padding: 20px; color: maroon; font-weight: bold;">TASKS IN TODO</div>
+
+                <c:forEach var="todoItem" items="${todo}">
+                    <div id="${todoItem.id}" class = "">
+                        <address style="background-color:lightgrey;">
+                            <br/>
+                            <%--<strong>Task Number - ${todoItem.id}</strong><br>--%>
+                            <strong>Task Number - ${todoItem.id}</strong><br>
+                            Description<br>
+                                ${todoItem.text}<br>
+                            <button type="button" class="btn btn-success">Start progress</button>
+                            <br/><br/>
+                        </address>
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="col-sm-3" style="background-color:lavender;">
+                <div style="padding: 20px; color: maroon; font-weight: bold;"> TASKS IN PROGRESS</div>
                 <c:forEach var="todoItem" items="${todo}">
                     <div id="${todoItem.id}" class = "">
                         <address style="background-color:lightgrey;">
@@ -166,62 +184,35 @@
                             <strong>Task Number - ${todoItem.id}</strong><br>
                             Description<br>
                                 ${todoItem.text}<br>
-                            <button type="button" class="btn btn-success">Start progress</button>
+                            <button type="button" class="btn btn-info">To review</button>
                         </address>
                     </div>
                 </c:forEach>
             </div>
-            <div class="col-sm-3" style="background-color:pink;">
+            <div class="col-sm-3" style="background-color:lavender;">
+                <div style="padding: 20px; color: maroon; font-weight: bold;"> TASKS IN REVIEW</div>
                 <c:forEach var="todoItem" items="${todo}">
-                    <div>
-                        <address>
+                    <div id="${todoItem.id}" class = "">
+                        <address style="background-color:lightgrey;">
                             <strong>Task Number - ${todoItem.id}</strong><br>
                             <strong>Task Number - ${todoItem.id}</strong><br>
                             Description<br>
                                 ${todoItem.text}<br>
-                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                        </address>
-                        <address>
-                            <strong>${todoItem.user.first_name}
-                                    ${todoItem.user.last_name}
-                            </strong><br>
-                            <a href="mailto:#">${todoItem.user.email}</a>
+                            <button type="button" class="btn btn-warning">Close</button>
                         </address>
                     </div>
                 </c:forEach>
             </div>
-            <div class="col-sm-3" style="background-color:slateblue;">
+            <div class="col-sm-3" style="background-color:lavender;">
+                <div style="padding: 20px; color: maroon; font-weight: bold;">CLOSED TASKS</div>
                 <c:forEach var="todoItem" items="${todo}">
-                    <div>
-                        <address>
+                    <div id="${todoItem.id}" class = "">
+                        <address style="background-color:lightgrey;">
+                            <strong>Task Number - ${todoItem.id}</strong><br>
                             <strong>Task Number - ${todoItem.id}</strong><br>
                             Description<br>
                                 ${todoItem.text}<br>
-                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                        </address>
-                        <address>
-                            <strong>${todoItem.user.first_name}
-                                    ${todoItem.user.last_name}
-                            </strong><br>
-                            <a href="mailto:#">${todoItem.user.email}</a>
-                        </address>
-                    </div>
-                </c:forEach>
-            </div>
-            <div class="col-sm-3" style="background-color:lightgreen;">
-                <c:forEach var="todoItem" items="${todo}">
-                    <div>
-                        <address>
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            Description<br>
-                                ${todoItem.text}<br>
-                            <abbr title="Phone">P:</abbr> (123) 456-7890
-                        </address>
-                        <address>
-                            <strong>${todoItem.user.first_name}
-                                    ${todoItem.user.last_name}
-                            </strong><br>
-                            <a href="mailto:#">${todoItem.user.email}</a>
+                            <button type="button" class="btn btn-danger">Delete</button>
                         </address>
                     </div>
                 </c:forEach>

@@ -80,4 +80,16 @@
             <property name="paramName" value="lang"/>
         </bean>
     </mvc:interceptors>
+
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="md.usm.tm.convertors.StringToProject"/>
+            </list>
+        </property>
+    </bean>
 </beans>
