@@ -31,6 +31,13 @@ public class MainController extends BaseController {
     @Qualifier("userServiceImpl")
     private UserServiceImpl userService;
 
+    //TODO: remove thismethod
+    private List<Task> initTestTasks(){
+        List<Task> retval = new ArrayList<>();
+
+        return retval;
+    }
+
     private void init(Model model) {
         List<Task> todoTasks = new ArrayList<Task>();
         User currentUser = userService.getUserByName(getPrincipal());
