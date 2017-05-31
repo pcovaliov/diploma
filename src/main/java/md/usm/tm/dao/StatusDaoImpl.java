@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,9 +31,18 @@ public class StatusDaoImpl extends AbstractGenericDao<Status, Integer> {
         return sessionFactory.getCurrentSession();
     }
 
+    @Transactional
     public List<Status> getAll() {
         return sessionFactory.getCurrentSession()
-                .createNamedQuery("SELECT * FROM status", Status.class)
+                .createNativeQuery("SELECT * FROM status", Status.class)
                 .getResultList();
+    }
+
+    @Transactional
+    public Status getStatusByDescription(String description){
+        Status status = sessionFactory.getCurrentSession()
+                .createNativeQuery("SELECT * FROM status s where s.status='" + description + "'", Status.class)
+                .getSingleResult();
+        return status;
     }
 }

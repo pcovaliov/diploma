@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by pcovaliov on 5/17/2017.
@@ -46,12 +44,12 @@ public class TaskController extends BaseController {
 
         List<String> statusList = new ArrayList<>();
 
-        for (StatusEnum status : StatusEnum.values()){
-            statusList.add(status.toString());
-        }
+//        for (StatusEnum status : StatusEnum.values()){
+//            statusList.add(status.toString());
+//        }
         model.addAttribute("projectList", projectService.getAllUsersProjects(currentUser.getId()));
         model.addAttribute("periodList", periodService.getAllUsersPeriods(currentUser.getId()));
-        model.addAttribute("statusList", statusList);
+        model.addAttribute("statusList", statusService.getAll());
 
 //        model.addAttribute("project_id");
 //        model.addAttribute("period_id");
@@ -69,13 +67,12 @@ public class TaskController extends BaseController {
 
 
     @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
-    public String saveTask(Model model,  @ModelAttribute("task") Task task) {
+    public String saveTask(@ModelAttribute("task") Task task ) {
         User user = userService.getUserByName(getPrincipal());
         task.setUser(user);
         if (task.getId() != 0) {
             taskService.update(task);
         } else {
-            task.setStatus(new Status("NOT_STARTED"));
             taskService.save(task);
         }
         return "main";

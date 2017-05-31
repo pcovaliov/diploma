@@ -16,9 +16,9 @@ public class StatusServiceImpl {
     @Autowired
     private StatusDaoImpl statusDao;
 
-    public Status getStatusById(int id) {
-        return statusDao.getById(id);
-    }
+//    public Status getStatusById(int id) {
+//        return statusDao.getById(id);
+//    }
 
     public List<Status> getAll() {
         return statusDao.getAll();

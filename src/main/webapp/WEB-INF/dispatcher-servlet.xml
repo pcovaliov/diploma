@@ -18,6 +18,7 @@
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
 
+
     <mvc:resources mapping="/resources/**"
                    location="/WEB-INF/resources/"
                    cache-period="10000"/>
@@ -85,11 +86,13 @@
     <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
 
     <bean id="conversionService"
-          class="org.springframework.context.support.ConversionServiceFactoryBean">
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="converters">
-            <list>
+            <set>
                 <bean class="md.usm.tm.convertors.StringToProject"/>
-            </list>
+                <bean class="md.usm.tm.convertors.StringToPeriod"/>
+                <bean class="md.usm.tm.convertors.StringToStatus"/>
+            </set>
         </property>
     </bean>
 </beans>

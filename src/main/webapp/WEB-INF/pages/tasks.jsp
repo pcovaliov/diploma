@@ -78,12 +78,12 @@
                     <form:options items="${periodList}" itemValue="id" itemLabel="periodName"/>
                 </form:select>
             </div>
-            <%--<div class="form-group">--%>
-                <%--<label for="statusList">Period</label>--%>
-                <%--<form:select class="form-control" id="statusList" path="status">--%>
-                    <%--<form:options items="${statusList}" itemValue="status" itemLabel="desription"/>--%>
-                <%--</form:select>--%>
-            <%--</div>--%>
+            <div class="form-group">
+                <label for="statusList">Current Status</label>
+                <form:select class="form-control" id="statusList" path="status">
+                    <form:options items="${statusList}" itemValue="status" itemLabel="description"/>
+                </form:select>
+            </div>
             <div class="form-group">
                 <label for="exampleTextarea">Example textarea</label>
                 <form:textarea class="form-control" id="exampleTextarea" rows="3" path="text"

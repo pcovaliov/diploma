@@ -20,6 +20,7 @@ public class Task implements Serializable {
     private User user;
 
     @ManyToOne
+//    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "status_id")
     private Status status;
 
