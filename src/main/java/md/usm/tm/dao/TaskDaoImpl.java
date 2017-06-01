@@ -66,6 +66,12 @@ public class TaskDaoImpl extends AbstractGenericDao<Task, Integer>{
                 .getResultList();
     }
 
+    public List<Task> getAllTasks() {
+        return sessionFactory.getCurrentSession().createNativeQuery(
+                "SELECT * FROM task", Task.class)
+                .getResultList();
+    }
+
     @Override
     protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();

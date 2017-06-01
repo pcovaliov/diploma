@@ -4,8 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by pcovaliov on 5/15/2017.
@@ -32,6 +32,10 @@ public class Period implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "period", cascade = CascadeType.REFRESH,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Task> tasks;
+
     public Period() {
     }
 
@@ -39,6 +43,14 @@ public class Period implements Serializable {
         this.periodName = periodName;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public User getUser() {

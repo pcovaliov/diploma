@@ -1,10 +1,13 @@
 package md.usm.tm.controller;
 
-import md.usm.tm.model.*;
+import md.usm.tm.model.Task;
+import md.usm.tm.model.User;
 import md.usm.tm.service.*;
+import md.usm.tm.validator.TaskValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +36,9 @@ public class TaskController extends BaseController {
 
     @Autowired
     private StatusServiceImpl statusService;
+
+    @Autowired
+    private TaskValidator taskValidator;
 
     private void init(Model model) {
         User currentUser = userService.getUserByName(getPrincipal());
@@ -65,16 +71,28 @@ public class TaskController extends BaseController {
         return "tasks";
     }
 
-
     @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
-    public String saveTask(@ModelAttribute("task") Task task ) {
+    public String saveTask(@ModelAttribute("task") Task task, BindingResult bindingResult, Model model) {
+        taskValidator.validate(task, bindingResult);
+        if (bindingResult.hasErrors()){
+            init(model);
+            return "tasks";
+        }
+
         User user = userService.getUserByName(getPrincipal());
         task.setUser(user);
         if (task.getId() != 0) {
             taskService.update(task);
         } else {
             taskService.save(task);
+
+            List<Task> tasks = taskService.getAllTasks();
+            task = tasks.get(tasks.size()-1);
+            System.out.println(task);
+            task.setShortName(task.getProject().getShortName() + "" + task.getId());
+            taskService.update(task);
         }
+
         return "main";
     }
 

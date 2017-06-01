@@ -34,7 +34,30 @@ public class ProjectDaoImpl extends AbstractGenericDao<Project, Integer> {
     }
 
     public void deleteProjectById(int id) {
+        System.out.println("We in delete mod");
         getCurrentSession().delete(getById(id));
+    }
+
+    public Project findByProjectName(String projectName){
+        System.out.println("In DAO -----------------------------------------------");
+        List<Project> projectList = sessionFactory.getCurrentSession()
+                .createQuery("FROM Project WHERE projectName='" + projectName +"'")
+                .list();
+        if (projectList == null || projectList.size() == 0){
+            return null;
+        }
+        return projectList.get(0);
+    }
+
+    public Project findByProjectShortName (String shortName){
+        System.out.println("In DAO -----------------------------------------------");
+        List<Project> projectList = sessionFactory.getCurrentSession()
+                .createQuery("FROM Project WHERE shortName='" + shortName +"'")
+                .list();
+        if (projectList == null || projectList.size() == 0){
+            return null;
+        }
+        return projectList.get(0);
     }
 
     @Override

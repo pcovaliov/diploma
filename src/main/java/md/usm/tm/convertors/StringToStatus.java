@@ -15,6 +15,9 @@ final class StringToStatus implements Converter<String,Status> {
 
     @Override
     public Status convert(String source) {
+        if (source.equals("Please select current Status")){
+            return null;
+        }
         return statusDao.getStatusByDescription(source);
     }
 }

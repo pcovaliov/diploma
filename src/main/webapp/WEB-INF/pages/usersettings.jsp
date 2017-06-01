@@ -30,7 +30,7 @@
 </head>
 <body style="overflow-y: scroll;">
 <spring:message code='delete_profile' var="delete_profile"/>
-<spring:message code='description' var="description"/>
+<%--<spring:message code='description' var="description"/>--%>
 <spring:message code='first_name' var="first_name"/>
 <spring:message code='last_name' var="last_name"/>
 <spring:message code='save_changes' var="save_changes"/>
@@ -54,7 +54,7 @@
                         </p>
                         <h4 class="status_name">${currentUser.first_name} ${currentUser.last_name}</h4>
 
-                        <p class="status_name">${currentUser.description}</p>
+                        <%--<p class="status_name">${currentUser.description}</p>--%>
 
                         <div class="twPc-divStats">
                             <ul class="twPc-Arrange">
@@ -97,12 +97,12 @@
                                     <form:hidden path="email"/>
                                     <form:hidden path="password"/>
 
-                                <section id="editable" contenteditable="true">
+                                <%--<section id="editable" contenteditable="true">
                                     <form:textarea placeholder="${description}" path="description"
                                                    style="border: 1px solid #ddd; box-shadow: none; resize: none; overflow: hidden; font-size: larger"
                                                    class="form-control"
                                                    maxlength="20" autofocus="true"></form:textarea>
-                                </section>
+                                </section>--%>
                                 <br>
                                         <spring:bind path="first_name">
                                 <div class="form-group alert-danger ${status.error ? 'has-error' : ''}">

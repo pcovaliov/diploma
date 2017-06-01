@@ -46,4 +46,14 @@ public class PeriodDaoImpl extends AbstractGenericDao<Period, Integer> {
     protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
+
+    public Period findByPeriodName (String periodName){
+        List<Period> projectList = sessionFactory.getCurrentSession()
+                .createQuery("FROM Period WHERE periodName='" + periodName +"'")
+                .list();
+        if (projectList == null || projectList.size() == 0){
+            return null;
+        }
+        return projectList.get(0);
+    }
 }

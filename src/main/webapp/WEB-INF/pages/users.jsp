@@ -73,7 +73,7 @@
                     </p>
                     <h4 class="status_name">${currentUser.first_name} ${currentUser.last_name}</h4>
 
-                    <p class="status_name">${currentUser.description}</p>
+                    <%--<p class="status_name">${currentUser.description}</p>--%>
 
                     <div class="twPc-divStats">
                         <ul class="twPc-Arrange">
@@ -125,8 +125,8 @@
                                                     <br>
                                                     <br>
 
-                                                    <p class="text-primary small"
-                                                       style="text-align: center; ">${v.description}</p>
+                                                    <%--<p class="text-primary small"
+                                                       style="text-align: center; ">${v.description}</p>--%>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,8 +162,8 @@
                                                     <br>
                                                     <br>
 
-                                                    <p class="text-primary small"
-                                                       style="text-align: center; ">${v.description}</p>
+                                                    <%--<p class="text-primary small"
+                                                       style="text-align: center; ">${v.description}</p>--%>
                                                 </div>
                                             </div>
                                         </div>
@@ -199,8 +199,8 @@
                                                     <br>
                                                     <br>
 
-                                                    <p class="text-primary small"
-                                                       style="text-align: center; ">${v.description}</p>
+                                                    <%--<p class="text-primary small"
+                                                       style="text-align: center; ">${v.description}</p>--%>
                                                 </div>
                                             </div>
                                         </div>

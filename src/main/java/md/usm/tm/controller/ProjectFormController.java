@@ -4,9 +4,11 @@ import md.usm.tm.model.Project;
 import md.usm.tm.model.User;
 import md.usm.tm.service.ProjectServiceImpl;
 import md.usm.tm.service.UserServiceImpl;
+import md.usm.tm.validator.ProjectValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,9 @@ public class ProjectFormController extends BaseController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private ProjectValidator projectValidator;
+
     @RequestMapping(value = "user/project/editProject/{id}", method = RequestMethod.GET)
     public String editProject(Model model, @PathVariable int id) {
         model.addAttribute("project", projectService.getById(id));
@@ -37,7 +42,12 @@ public class ProjectFormController extends BaseController {
     }
 
     @RequestMapping(value = "/saveProject", method = RequestMethod.POST)
-    public String saveProject(Model model, @ModelAttribute("project") Project project) {
+    public String saveProject(Model model, @ModelAttribute("project") Project project, BindingResult bindingResult) {
+        projectValidator.validate(project, bindingResult);
+        if (bindingResult.hasErrors()){
+            return "projectform";
+        }
+
         User user = userService.getUserByName(getPrincipal());
         project.setUser(user);
         if (project.getId() != 0) {

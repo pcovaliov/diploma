@@ -62,30 +62,40 @@
                 <label for="taskName">Task Name</label>
                 <form:input type="text" path="name" class="form-control" id="taskName" placeholder="Task Name"
                             maxlength="50" minlength="3"/>
-                <small id="emailHelp" class="form-text text-muted">This will be used as task code/name.
-                </small>
+                <c:set var="domainNameErrors"><form:errors path="name"/></c:set>
+                <c:if test="${empty domainNameErrors}">
+                    <small id="emailHelp" class="form-text text-muted">This will be used as task code/name.</small>
+                </c:if>
+                <p style="color: red" class="form-text text-muted"><form:errors path="name"/></p>
+
+
             </div>
             <div class="form-group">
                 <label for="projectList">Project Name</label>
                 <form:select class="form-control" id="projectList" path="project">
+                    <form:option value="Please Select Project"/>
                     <form:options items="${projectList}" itemValue="id" itemLabel="projectName"/>
                 </form:select>
-
+                <p style="color: red" class="form-text text-muted"><form:errors path="project"/></p>
             </div>
             <div class="form-group">
                 <label for="periodList">Period</label>
                 <form:select class="form-control" id="periodList" path="period">
+                    <form:option value="Please Select Period"/>
                     <form:options items="${periodList}" itemValue="id" itemLabel="periodName"/>
                 </form:select>
+                <p style="color: red" class="form-text text-muted"><form:errors path="period"/></p>
             </div>
             <div class="form-group">
                 <label for="statusList">Current Status</label>
                 <form:select class="form-control" id="statusList" path="status">
+                    <form:option value="Please select current Status"/>
                     <form:options items="${statusList}" itemValue="status" itemLabel="description"/>
                 </form:select>
+                <p style="color: red" class="form-text text-muted"><form:errors path="status"/></p>
             </div>
             <div class="form-group">
-                <label for="exampleTextarea">Example textarea</label>
+                <label for="exampleTextarea">Description</label>
                 <form:textarea class="form-control" id="exampleTextarea" rows="3" path="text"
                                maxlength="250"></form:textarea>
             </div>

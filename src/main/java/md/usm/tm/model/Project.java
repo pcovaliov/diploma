@@ -2,6 +2,7 @@ package md.usm.tm.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by pcovaliov on 5/15/2017.
@@ -25,12 +26,24 @@ public class Project implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REFRESH,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Task> tasks;
+
     public Project() {
     }
 
     public Project(String projectName, String shortName) {
         this.projectName = projectName;
         this.shortName = shortName;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public User getUser() {

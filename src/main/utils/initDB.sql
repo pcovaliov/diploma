@@ -65,6 +65,7 @@ CREATE TABLE public.task (
   project_id INTEGER,
   status_id INTEGER,
   attachment CHARACTER VARYING(255),
+  short_name CHARACTER VARYING(20),
   FOREIGN KEY (user_id) REFERENCES users (id)
   MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
   FOREIGN KEY (period_id) REFERENCES period (id)

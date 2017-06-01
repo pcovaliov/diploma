@@ -15,6 +15,9 @@ final class StringToPeriod implements Converter<String,Period> {
 
     @Override
     public Period convert(String source) {
+        if (source.equals("Please Select Period")){
+            return null;
+        }
         return periodDao.getById(Integer.parseInt(source));
     }
 }

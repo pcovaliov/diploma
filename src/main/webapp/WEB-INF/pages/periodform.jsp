@@ -62,8 +62,11 @@
                 <label for="projectName">Project name</label>
                 <form:input type="text" path="periodName" class="form-control" id="projectName"
                             maxlength="50" minlength="3" placeholder="Project Name"/>
-                <small id="emailHelp" class="form-text text-muted">Project Name.
-                </small>
+                <c:set var="domainNameErrors"><form:errors path="periodName"/></c:set>
+                <c:if test="${empty domainNameErrors}">
+                    <small id="emailHelp" class="form-text text-muted">Period Name</small>
+                </c:if>
+                <p style="color: red" class="form-text text-muted"><form:errors path="periodName"/></p>
             </div>
             <div class="form-group">
                 <label for="startDate">Project Short Name</label>

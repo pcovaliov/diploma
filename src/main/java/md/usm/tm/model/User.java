@@ -86,8 +86,8 @@ public class User implements Serializable {
     @Column(name = "avatar")
     private String avatar = "/resources/pics/useravatar.png";
 
-    @Column(name = "description")
-    private String description;
+    /*@Column(name = "description")
+    private String description;*/
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -177,40 +177,47 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public String getDescription() {
+    /*public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
 
         User user = (User) o;
 
-        if (id != user.id) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (getId() != user.getId()) return false;
+        if (getUsername() != null ? !getUsername().equals(user.getUsername()) : user.getUsername() != null)
+            return false;
+        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
+            return false;
+        if (getConfirmPassword() != null ? !getConfirmPassword().equals(user.getConfirmPassword()) : user.getConfirmPassword() != null)
+            return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        return allTasks != null ? allTasks.equals(user.allTasks) : user.allTasks == null;
+        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
+        if (getAvatar() != null ? !getAvatar().equals(user.getAvatar()) : user.getAvatar() != null) return false;
+        return getAllTasks() != null ? getAllTasks().equals(user.getAllTasks()) : user.getAllTasks() == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        int result = getId();
+        result = 31 * result + (getUsername() != null ? getUsername().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getConfirmPassword() != null ? getConfirmPassword().hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (allTasks != null ? allTasks.hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getAvatar() != null ? getAvatar().hashCode() : 0);
+        result = 31 * result + (getAllTasks() != null ? getAllTasks().hashCode() : 0);
         return result;
     }
 

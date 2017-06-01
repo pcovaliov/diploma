@@ -2,7 +2,7 @@ package md.usm.tm.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 /**
  * Created by pcovaliov on 11/2/2016.
@@ -31,7 +31,7 @@ public class Task implements Serializable {
     private String text;
 
     @Column(name = "postDateTime")
-    private LocalDateTime postDateTime = LocalDateTime.now();
+    private OffsetDateTime postDateTime = OffsetDateTime.now();
 
     @Column(name = "attachment")
     private String attachment;
@@ -44,7 +44,10 @@ public class Task implements Serializable {
     @JoinColumn(name = "period_id")
     private Period period;
 
-    public Task(User user, Status status, String name, String text, LocalDateTime postDateTime, String attachment, Project project, Period period) {
+    @Column(name = "short_name")
+    private String shortName;
+
+    public Task(User user, Status status, String name, String text, OffsetDateTime postDateTime, String attachment, Project project, Period period, String shortName) {
         this.user = user;
         this.status = status;
         this.name = name;
@@ -53,11 +56,27 @@ public class Task implements Serializable {
         this.attachment = attachment;
         this.project = project;
         this.period = period;
+        this.shortName = shortName;
     }
 
     public Task() {
     }
 
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
 
     public String getName() {
         return name;
@@ -115,11 +134,11 @@ public class Task implements Serializable {
         this.text = text;
     }
 
-    public LocalDateTime getPostDateTime() {
+    public OffsetDateTime getPostDateTime() {
         return postDateTime;
     }
 
-    public void setPostDateTime(LocalDateTime postDateTime) {
+    public void setPostDateTime(OffsetDateTime postDateTime) {
         this.postDateTime = postDateTime;
     }
 
@@ -130,21 +149,6 @@ public class Task implements Serializable {
 
     public void setImage(String image) {
         this.attachment = image;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", user=" + user +
-                ", status=" + status +
-                ", name='" + name + '\'' +
-                ", text='" + text + '\'' +
-                ", postDateTime=" + postDateTime +
-                ", attachment='" + attachment + '\'' +
-                ", project=" + project +
-                ", period=" + period +
-                '}';
     }
 
     @Override
@@ -161,9 +165,11 @@ public class Task implements Serializable {
         if (getText() != null ? !getText().equals(task.getText()) : task.getText() != null) return false;
         if (getPostDateTime() != null ? !getPostDateTime().equals(task.getPostDateTime()) : task.getPostDateTime() != null)
             return false;
-        if (attachment != null ? !attachment.equals(task.attachment) : task.attachment != null) return false;
+        if (getAttachment() != null ? !getAttachment().equals(task.getAttachment()) : task.getAttachment() != null)
+            return false;
         if (getProject() != null ? !getProject().equals(task.getProject()) : task.getProject() != null) return false;
-        return getPeriod() != null ? getPeriod().equals(task.getPeriod()) : task.getPeriod() == null;
+        if (getPeriod() != null ? !getPeriod().equals(task.getPeriod()) : task.getPeriod() != null) return false;
+        return getShortName() != null ? getShortName().equals(task.getShortName()) : task.getShortName() == null;
 
     }
 
@@ -175,9 +181,27 @@ public class Task implements Serializable {
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getText() != null ? getText().hashCode() : 0);
         result = 31 * result + (getPostDateTime() != null ? getPostDateTime().hashCode() : 0);
-        result = 31 * result + (attachment != null ? attachment.hashCode() : 0);
+        result = 31 * result + (getAttachment() != null ? getAttachment().hashCode() : 0);
         result = 31 * result + (getProject() != null ? getProject().hashCode() : 0);
         result = 31 * result + (getPeriod() != null ? getPeriod().hashCode() : 0);
+        result = 31 * result + (getShortName() != null ? getShortName().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", user=" + user +
+                ", status=" + status +
+                ", name='" + name + '\'' +
+                ", text='" + text + '\'' +
+                ", postDateTime=" + postDateTime +
+                ", attachment='" + attachment + '\'' +
+                ", project=" + project +
+                ", period=" + period +
+                ", shortName='" + shortName + '\'' +
+                '}';
+    }
+
 }

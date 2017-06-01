@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -86,7 +87,7 @@
                         </p>
                         <h4 class="status_name">${currentUser.first_name} ${currentUser.last_name}</h4>
 
-                        <p class="status_name">${currentUser.description}</p>
+                        <%--<p class="status_name">${currentUser.description}</p>--%>
 
                         <div class="twPc-divStats">
                             <ul class="twPc-Arrange">
@@ -106,11 +107,12 @@
                                     <span class="twPc-StatValue status_name">${periods.size()}</span>
                                 </li>
                             </ul>
+                            <br>
                             <ul class="twPc-Arrange">
-                                <li><button type="button" class="btn btn-success"
+                                <li><button type="button" class="btn btn-success pull-left " style="padding: 8px 20px;"
                                             onclick="location.href='/user/project/createProject'">
                                     <spring:message code='newproject'/></button></li>
-                                <li><button type="button" class="btn btn-success"
+                                <li><button type="button" class="btn btn-success pull-right" style="padding: 8px 20px;"
                                             onclick="location.href='/user/profile/createPeriod'">
                                     <spring:message code='newperiod'/></button></li>
                             </ul>
@@ -179,8 +181,8 @@
                                         <tr>
                                             <td> ${period.id}</td>
                                             <td> ${period.periodName}</td>
-                                            <td> ${period.startDate}</td>
-                                            <td> ${period.endDate}</td>
+                                            <td> <fmt:formatDate value="${period.startDate}" pattern="MM.dd.yyyy"/> </td>
+                                            <td> <fmt:formatDate value="${period.endDate}" pattern="MM.dd.yyyy"/></td>
                                             <td>
                                                 <button onclick="location.href='/user/profile/editPeriod/${period.id}';"
                                                         type="button" class="btn btn-info"><spring:message

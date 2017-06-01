@@ -16,7 +16,7 @@
                 </p>
                 <h4 class="status_name">${currentUser.first_name} ${currentUser.last_name}</h4>
 
-                <p class="status_name">${currentUser.description}</p>
+                <%--<p class="status_name">${currentUser.description}</p>--%>
 
                 <div class="twPc-divStats">
                     <ul class="twPc-Arrange">

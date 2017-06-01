@@ -37,4 +37,8 @@ public class PeriodServiceImpl {
     public Period update(Period period) {
         return periodDao.update(period);
     }
+
+    public Period findByPeriodName (String periodName){
+        return periodDao.findByPeriodName(periodName);
+    }
 }

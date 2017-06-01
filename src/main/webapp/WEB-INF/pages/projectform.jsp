@@ -62,15 +62,23 @@
                 <label for="projectName">Project name</label>
                 <form:input type="text" path="projectName" class="form-control" id="projectName" placeholder="Project Name"
                             maxlength="50" minlength="3"/>
-                <small id="emailHelp" class="form-text text-muted">Project Name.
-                </small>
+                <c:set var="domainNameErrors"><form:errors path="projectName"/></c:set>
+                <c:if test="${empty domainNameErrors}">
+                    <small id="emailHelp" class="form-text text-muted">Project Name.</small>
+                </c:if>
+                <p style="color: red" class="form-text text-muted"><form:errors path="projectName"/></p>
+
             </div>
             <div class="form-group">
                 <label for="projectShortName">Project Short Name</label>
                 <form:input type="text" path="shortName" class="form-control" id="projectShortName" placeholder="Project Short Name"
                             maxlength="3" minlength="3"/>
-                <small id="emailHelp" class="form-text text-muted">Lenght should be 3.
-                </small>
+                <c:set var="domainNameErrors"><form:errors path="shortName"/></c:set>
+                <c:if test="${empty domainNameErrors}">
+                    <small id="emailHelp" class="form-text text-muted">Lenght should be 3.</small>
+                </c:if>
+                <p style="color: red" class="form-text text-muted"><form:errors path="shortName"/></p>
+
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <form:input type="hidden" path="id" name="id" value="${project.id}"/>

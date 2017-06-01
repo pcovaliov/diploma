@@ -45,5 +45,9 @@ public class TaskServiceImpl {
         return taskDao.getTaskByUserId(id);
     }
 
+    public List<Task> getAllTasks(){
+        return taskDao.getAllTasks();
+    }
+
 
 }

@@ -14,6 +14,9 @@ final class StringToProject implements Converter<String,Project> {
 
     @Override
     public Project convert(String source) {
+        if (source.equals("Please Select Project")){
+            return null;
+        }
         return projectDao.getById(Integer.parseInt(source));
     }
 }

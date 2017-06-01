@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.PrimitiveIterator;
 
 /**
  * Created by pcovaliov on 5/29/2017.
@@ -34,4 +33,13 @@ public class ProjectServiceImpl {
     public Project save(Project project) {return projectDao.persist(project);}
 
     public Project update(Project project) {return projectDao.update(project);}
+
+    public Project findByProjectName(String projectName){
+        System.out.println("In Service -----------------------------------------------");
+        return projectDao.findByProjectName(projectName);
+    }
+
+    public Project findByProjectShortName (String shortName){
+        return projectDao.findByProjectShortName(shortName);
+    }
 }
