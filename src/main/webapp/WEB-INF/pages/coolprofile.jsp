@@ -52,6 +52,16 @@
 
         });
     </script>
+
+    <script>
+        function confirmDelete(delForm, delUrl) { // <--- changed here
+            if (confirm("Are you sure ?")) {
+                delForm.action = delUrl;          // <--- changed here
+                return true;                      // <--- changed here
+            }
+            return false;                         // <--- changed here
+        }
+    </script>
 </head>
 <style>
     .shirina {
@@ -146,12 +156,21 @@
                                     <td> ${project.projectName}</td>
                                     <td> ${project.shortName}</td>
                                     <td>
-                                        <button onclick="location.href='/user/project/editProject/${project.id}';"
+                                        <button onsubmit="return confirmDelete(this, '/user/project/editProject/${project.id}')"
+                                                onclick="location.href='/user/project/editProject/${project.id}';"
                                                 type="button" class="btn btn-info"><spring:message
                                                 code='editproject'/></button>
-                                        <button onclick="location.href='/user/profile/deleteProject/${project.id}';"
-                                                type="button" class="btn btn-danger"><spring:message
+                                        <%--<button onclick="location.href='/user/profile/deleteProject/${project.id}';"--%>
+                                                <%--type="button" class="btn btn-danger"><spring:message--%>
+                                                <%--code='deleteproject'/></button>--%>
+                                        <jsp:include page="js-modal.jsp">
+                                            <jsp:param name="id" value="${project.id}"/>
+                                            <jsp:param name="del" value="/user/profile/deleteProject/"/>
+                                            <jsp:param name="action" value="period ${project.projectName}"/>
+                                        </jsp:include>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal${project.id}"><spring:message
                                                 code='deleteproject'/></button>
+
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -187,11 +206,19 @@
                                                 <button onclick="location.href='/user/profile/editPeriod/${period.id}';"
                                                         type="button" class="btn btn-info"><spring:message
                                                         code='editproject'/></button>
-                                                <button onclick="location.href='/user/profile/deletePeriod/${period.id}';"
-                                                        type="button" class="btn btn-danger"><spring:message
+                                                <%--<button onclick="location.href='/user/profile/deletePeriod/${period.id}';"--%>
+                                                        <%--type="button" class="btn btn-danger"><spring:message--%>
+                                                        <%--code='deleteproject'/></button>--%>
+                                                <jsp:include page="js-modal.jsp">
+                                                    <jsp:param name="id" value="${period.id}"/>
+                                                    <jsp:param name="del" value="/user/profile/deletePeriod/"/>
+                                                    <jsp:param name="action" value="period ${period.periodName}"/>
+                                                </jsp:include>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal${period.id}"><spring:message
                                                         code='deleteproject'/></button>
                                             </td>
                                         </tr>
+
                                     </c:forEach>
                                     <%--<jsp:include page="modal.jsp"/>--%>
                                 </div>
@@ -211,6 +238,7 @@
         </div>
     </div>
 </div>
+
 
     <%--<script>--%>
         <%--&lt;%&ndash;REMEMBER CURRENT TAB&ndash;%&gt;--%>

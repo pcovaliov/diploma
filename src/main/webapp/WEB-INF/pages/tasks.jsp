@@ -57,7 +57,7 @@
 <div class="container text-center">
 
     <div class="col-md-8 col-md-offset-2 abc">
-        <form:form method="POST" action="/saveTask" class="form-signin" modelAttribute="task">
+        <form:form method="POST" action="/saveTask" class="form-signin" modelAttribute="task" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="taskName">Task Name</label>
                 <form:input type="text" path="name" class="form-control" id="taskName" placeholder="Task Name"
@@ -99,11 +99,19 @@
                 <form:textarea class="form-control" id="exampleTextarea" rows="3" path="text"
                                maxlength="250"></form:textarea>
             </div>
+
+            <div class="form-group">
+                <input type="file" name="file" /><br/>
+            </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
             <form:input type="hidden" path="id" name="id" value="${task.id}"/>
         </form:form>
     </div>
 </div>
+<%--<c:forEach items="${taskList}" var="tas">--%>
+    <%--<img src="${pageContext.request.contextPath}${tas.attachment}" width="10%" align="center" vspace="5%" hspace="11%">--%>
+<%--</c:forEach>--%>
 </body>
 </html>
 

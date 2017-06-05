@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +59,7 @@ public class TaskController extends BaseController {
         model.addAttribute("projectList", projectService.getAllUsersProjects(currentUser.getId()));
         model.addAttribute("periodList", periodService.getAllUsersPeriods(currentUser.getId()));
         model.addAttribute("statusList", statusService.getAll());
-
+        model.addAttribute("taskList", taskService.getAllTasks());
 //        model.addAttribute("project_id");
 //        model.addAttribute("period_id");
 //        model.addAttribute("taskText");
@@ -72,15 +75,43 @@ public class TaskController extends BaseController {
     }
 
     @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
-    public String saveTask(@ModelAttribute("task") Task task, BindingResult bindingResult, Model model) {
+    public String saveTask(@ModelAttribute("task") Task task, BindingResult bindingResult, Model model,
+                           @RequestParam("file") MultipartFile file, HttpSession session) {
         taskValidator.validate(task, bindingResult);
         if (bindingResult.hasErrors()){
             init(model);
             return "tasks";
         }
 
+//        String rootPath = System.getProperty("catalina.home") + File.separator + "webapps";
+//        String rootPath = "C://Projects";
+        String rootPath = "C://Users//aborisco//IdeaProjects//diploma//src//main//webapp//WEB-INF//resources//uploadFiles";
+        String imagePath = "/resources/uploadFiles/";
+        String name = null;
+
+        if (!file.isEmpty()) {
+            try {
+                name = file.getOriginalFilename();
+                byte[] bytes = file.getBytes();
+                File dir = new File(rootPath + File.separator);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                stream.write(bytes);
+                stream.flush();
+                stream.close();
+
+            } catch (Exception e) {
+                e.getMessage();
+                return "main";
+            }
+        }
+
         User user = userService.getUserByName(getPrincipal());
         task.setUser(user);
+        task.setAttachment(imagePath + name);
         if (task.getId() != 0) {
             taskService.update(task);
         } else {
