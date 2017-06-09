@@ -11,17 +11,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+    <%--<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/css/bootstrap.css">
     <link rel="stylesheet" href="/resources/css/profile.css">
     <link rel="stylesheet" href="/resources/css/style.css">
     <link rel="stylesheet" href="/resources/css/card.css">
-    <%--<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">--%>
+    &lt;%&ndash;<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">&ndash;%&gt;
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>--%>
+
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.1.1/sweetalert2.css">
+    <style type="text/css">
+        <%@include file="../resources/css/card.css"%>
+        <%@include file="../resources/css/profile.css"%>
+        <%@include file="../resources/css/bootstrap.css"%>
+        <%@include file="../resources/css/style.css"%>
+
+    </style>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -157,64 +168,85 @@
 
     <!-- MIDDLE PART -->
     <div class="col-sm-18 abc" style="margin-top: 52px;">
+        <br>
+        <form:form method="POST" action="sortTask" class="form-signin" modelAttribute="projects" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="projectList">Sort by Project</label>
+                <form:select class="form-control" id="projectList" path="projectName">
+                    <form:option value="Please Select Project"/>
+                    <form:options items="${projectList}" itemValue="projectName" itemLabel="projectName"/>
+                </form:select>
+                <p style="color: red" class="form-text text-muted"><form:errors path="projectName"/></p>
+                <button type="submit" class="btn btn-primary" style="padding: 7px 80px;">Sort</button>
+            </div>
+        </form:form>
         <div class="row">
             <div class="col-sm-3" style="background-color:lavender;">
                 <div style="padding: 20px; color: maroon; font-weight: bold;">TASKS IN TODO</div>
 
                 <c:forEach var="todoItem" items="${todo}">
-                    <div id="${todoItem.id}" class = "">
-                        <address style="background-color:lightgrey;">
-                            <br/>
-                            <%--<strong>Task Number - ${todoItem.id}</strong><br>--%>
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            Description<br>
-                                ${todoItem.text}<br>
-                            <button type="button" class="btn btn-success">Start progress</button>
-                            <br/><br/>
-                        </address>
-                    </div>
+                    <c:if test="${todoItem.status.id == 1}">
+                        <div id="${todoItem.id}" class = "">
+                            <address style="background-color:lightgrey;">
+                                <br/>
+                                <strong>${todoItem.name}</strong><br>
+                                    <p class="texBox">${todoItem.text}</p>
+                                <form:form method="POST" action="startProgress">
+                                    <input hidden name="taskId" value="${todoItem.id}">
+                                    <button type="submit" class="btn btn-success">Start progress</button>
+                                </form:form>
+                                <br/>
+                            </address>
+                        </div>
+                    </c:if>
                 </c:forEach>
             </div>
             <div class="col-sm-3" style="background-color:lavender;">
                 <div style="padding: 20px; color: maroon; font-weight: bold;"> TASKS IN PROGRESS</div>
                 <c:forEach var="todoItem" items="${todo}">
-                    <div id="${todoItem.id}" class = "">
-                        <address style="background-color:lightgrey;">
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            Description<br>
-                                ${todoItem.text}<br>
-                            <button type="button" class="btn btn-info">To review</button>
-                        </address>
-                    </div>
+                    <c:if test="${todoItem.status.id == 2}">
+                        <div id="${todoItem.id}" class = "">
+                            <address style="background-color:lightgrey;">
+                                <br/>
+                                <strong>${todoItem.name}</strong><br>
+                                    <p class="texBox">${todoItem.text}</p>
+                                <button type="button" class="btn btn-info">To review</button>
+                                <br/><br/>
+                            </address>
+                        </div>
+                    </c:if>
                 </c:forEach>
             </div>
             <div class="col-sm-3" style="background-color:lavender;">
                 <div style="padding: 20px; color: maroon; font-weight: bold;"> TASKS IN REVIEW</div>
                 <c:forEach var="todoItem" items="${todo}">
-                    <div id="${todoItem.id}" class = "">
-                        <address style="background-color:lightgrey;">
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            Description<br>
-                                ${todoItem.text}<br>
-                            <button type="button" class="btn btn-warning">Close</button>
-                        </address>
-                    </div>
+                    <c:if test="${todoItem.status.id == 3}">
+                        <div id="${todoItem.id}" class = "">
+                            <address style="background-color:lightgrey;">
+                                <br/>
+                                <strong>${todoItem.name}</strong><br>
+                                    <p class="texBox">${todoItem.text}</p>
+                                <button type="button" class="btn btn-warning">Close</button>
+                                <br/><br/>
+                            </address>
+                        </div>
+                    </c:if>
                 </c:forEach>
             </div>
             <div class="col-sm-3" style="background-color:lavender;">
                 <div style="padding: 20px; color: maroon; font-weight: bold;">CLOSED TASKS</div>
                 <c:forEach var="todoItem" items="${todo}">
-                    <div id="${todoItem.id}" class = "">
-                        <address style="background-color:lightgrey;">
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            <strong>Task Number - ${todoItem.id}</strong><br>
-                            Description<br>
-                                ${todoItem.text}<br>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                        </address>
-                    </div>
+                    <c:if test="${todoItem.status.id == 4}">
+                        <div id="${todoItem.id}" class = "">
+                            <address style="background-color:lightgrey;">
+                                <br/>
+                                <strong>${todoItem.name}</strong><br>
+                                    <p class="texBox">${todoItem.text}</p>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                                <br/><br/>
+                            </address>
+                        </div>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>

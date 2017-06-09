@@ -105,7 +105,7 @@ public class TaskController extends BaseController {
 
             } catch (Exception e) {
                 e.getMessage();
-                return "main";
+                return "redirect:/main";
             }
         }
 
@@ -124,7 +124,7 @@ public class TaskController extends BaseController {
             taskService.update(task);
         }
 
-        return "main";
+        return "redirect:/main";
     }
 
 }

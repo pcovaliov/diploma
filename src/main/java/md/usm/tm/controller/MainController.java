@@ -1,17 +1,17 @@
 package md.usm.tm.controller;
 
+import md.usm.tm.model.Project;
 import md.usm.tm.model.Task;
 import md.usm.tm.model.User;
+import md.usm.tm.service.ProjectServiceImpl;
+import md.usm.tm.service.StatusServiceImpl;
 import md.usm.tm.service.TaskServiceImpl;
 import md.usm.tm.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("main")
+//@RequestMapping("main")
 public class MainController extends BaseController {
 
     @Autowired
@@ -31,6 +31,12 @@ public class MainController extends BaseController {
     @Qualifier("userServiceImpl")
     private UserServiceImpl userService;
 
+    @Autowired
+    private ProjectServiceImpl projectService;
+
+    @Autowired
+    private StatusServiceImpl statusService;
+
     //TODO: remove thismethod
     private List<Task> initTestTasks(){
         List<Task> retval = new ArrayList<>();
@@ -39,17 +45,16 @@ public class MainController extends BaseController {
     }
 
     private void init(Model model) {
-        List<Task> todoTasks = new ArrayList<Task>();
+
         User currentUser = userService.getUserByName(getPrincipal());
 
-        for (int i = 0; i < 20; i++) {
-            todoTasks.add(new Task());
-            todoTasks.add(new Task());
-            todoTasks.add(new Task());
-        }
+        List<Project> projectList = projectService.getAllUsersProjects(currentUser.getId());
+        List<Task> todoTasks = taskService.getTaskByUserId(currentUser.getId());
 
         model.addAttribute("todo", todoTasks);
+        model.addAttribute("projectList", projectList);
         model.addAttribute("task", new Task());
+        model.addAttribute("projects", new Project());
 
         model.addAttribute("currentPage", 0);
     }
@@ -60,23 +65,56 @@ public class MainController extends BaseController {
         return "main";
     }
 
-    @RequestMapping("/page={page}")
-    public String allTasksPagination(Model model, @PathVariable int page) {
-        int size = 25;
-        model.addAttribute("currentPage", page);
+    @RequestMapping(value = "/sortTask/{projectID}", method = RequestMethod.POST)
+    public String sorting(Model model, @ModelAttribute("projects") Project project,
+                          @PathVariable("projectID")int projectID ) {
+        project = projectService.findByProjectName(project.getProjectName());
+
+        User currentUser = userService.getUserByName(getPrincipal());
+        List<Project> projectList = projectService.getAllUsersProjects(currentUser.getId());
+        List<Task> todoTasks = taskService.getTasksByProject(project.getId());
+
+        model.addAttribute("todo", todoTasks);
+        model.addAttribute("projectList", projectList);
+        model.addAttribute("task", new Task());
+        model.addAttribute("projects", new Project());
+
+        model.addAttribute("currentPage", 0);
         return "main";
     }
 
+    @RequestMapping(value = "/startProgress", method = RequestMethod.POST)
+    public String startProgress(Model model, @ModelAttribute("projects") Project project,
+                                @RequestParam("taskId") Integer taskId ) {
 
-    @RequestMapping(value = "/addtask", method = RequestMethod.POST)
-    public String addTask(@RequestParam String text, @RequestParam String image) {
-        Task task = new Task();
-        if (image != null && !image.isEmpty()) {
-            task.setImage(image);
-        }
-        taskService.addTask(task);
-        return "redirect:/main";
+        System.out.println(project + "=============================================");
+
+        Task task = taskService.getTaskById(taskId);
+        task.setStatus(statusService.getStatusById(2));
+        taskService.update(task);
+
+
+
+        return "redirect:/task";
     }
+
+//    @RequestMapping("/page={page}")
+//    public String allTasksPagination(Model model, @PathVariable int page) {
+//        int size = 25;
+//        model.addAttribute("currentPage", page);
+//        return "main";
+//    }
+
+
+//    @RequestMapping(value = "/addtask", method = RequestMethod.POST)
+//    public String addTask(@RequestParam String text, @RequestParam String image) {
+//        Task task = new Task();
+//        if (image != null && !image.isEmpty()) {
+//            task.setImage(image);
+//        }
+//        taskService.addTask(task);
+//        return "redirect:/main";
+//    }
 
     @RequestMapping(value = "/deleteTask/{id}", method = RequestMethod.GET)
     public String deleteTask(@PathVariable int id) {

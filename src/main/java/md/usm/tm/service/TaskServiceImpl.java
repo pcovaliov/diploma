@@ -49,5 +49,5 @@ public class TaskServiceImpl {
         return taskDao.getAllTasks();
     }
 
-
+    public List<Task> getTasksByProject(int project_id){return taskDao.getTasksByProject(project_id);}
 }
