@@ -65,14 +65,19 @@ public class MainController extends BaseController {
         return "main";
     }
 
-    @RequestMapping(value = "/sortTask/{projectID}", method = RequestMethod.POST)
-    public String sorting(Model model, @ModelAttribute("projects") Project project,
-                          @PathVariable("projectID")int projectID ) {
+    @RequestMapping(value = "/sortTask", method = RequestMethod.POST)
+    public String sortRedirect(Model model, @ModelAttribute("projects") Project project) {
         project = projectService.findByProjectName(project.getProjectName());
+
+        return "redirect:/sortTask/" + project.getId();
+    }
+
+    @RequestMapping(value = "/sortTask/{projectID}")
+    public String sorting(Model model, @PathVariable("projectID")int projectID ) {
 
         User currentUser = userService.getUserByName(getPrincipal());
         List<Project> projectList = projectService.getAllUsersProjects(currentUser.getId());
-        List<Task> todoTasks = taskService.getTasksByProject(project.getId());
+        List<Task> todoTasks = taskService.getTasksByProject(projectID);
 
         model.addAttribute("todo", todoTasks);
         model.addAttribute("projectList", projectList);
@@ -86,8 +91,6 @@ public class MainController extends BaseController {
     @RequestMapping(value = "/startProgress", method = RequestMethod.POST)
     public String startProgress(Model model, @ModelAttribute("projects") Project project,
                                 @RequestParam("taskId") Integer taskId ) {
-
-        System.out.println(project + "=============================================");
 
         Task task = taskService.getTaskById(taskId);
         task.setStatus(statusService.getStatusById(2));

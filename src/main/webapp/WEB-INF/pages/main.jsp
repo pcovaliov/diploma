@@ -169,7 +169,7 @@
     <!-- MIDDLE PART -->
     <div class="col-sm-18 abc" style="margin-top: 52px;">
         <br>
-        <form:form method="POST" action="sortTask" class="form-signin" modelAttribute="projects" enctype="multipart/form-data">
+        <form:form method="POST" action="/sortTask" class="form-signin" modelAttribute="projects" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="projectList">Sort by Project</label>
                 <form:select class="form-control" id="projectList" path="projectName">
