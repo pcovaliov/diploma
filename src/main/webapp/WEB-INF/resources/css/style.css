@@ -186,11 +186,3 @@ footer {
     text-indent:-9999px;
     background: url('../../resources/pics/icon_top.png') no-repeat;
 }
-
-.texBox{
-    display: block;
-    word-wrap: break-word;
-    overflow-y: scroll;
-    height: 40px;
-    margin: 0 5% 0 5%;
-}

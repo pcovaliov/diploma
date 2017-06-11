@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -16,12 +17,12 @@
     <link rel="stylesheet" href="/resources/css/profile.css">
     <link rel="stylesheet" href="/resources/css/style.css">
     <link rel="stylesheet" href="/resources/css/card.css">
-    &lt;%&ndash;<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">&ndash;%&gt;
+    <%--&lt;%&ndash;<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">&ndash;%&gt;--%>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>--%>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 
 
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
@@ -32,6 +33,21 @@
         <%@include file="../resources/css/bootstrap.css"%>
         <%@include file="../resources/css/style.css"%>
 
+    </style>
+
+
+    <style>
+        /*.texBox{
+        display: block;
+        word-wrap: break-word;
+        overflow-y: scroll;
+        height: 40px;
+        margin: 0 5% 0 5%;
+        }*/
+
+        .address_hover { background-color: lightgrey; }
+
+        .address_hover:hover { background-color: #bfbfbf; }
     </style>
 
     <script type="text/javascript">
@@ -186,17 +202,30 @@
 
                 <c:forEach var="todoItem" items="${todo}">
                     <c:if test="${todoItem.status.id == 1}">
-                        <div id="${todoItem.id}" class = "">
-                            <address style="background-color:lightgrey;">
+                        <%--<div id="${todoItem.id}" class = "" onclick="location.href='<c:url value="/task"/>'">--%>
+                        <%--<fmt:formatDate value="${todoItem.period.endDate}" pattern="MM.dd.yyyy"/>--%>
+                        <jsp:include page="js-modal.jsp">
+                            <jsp:param name="id" value="${todoItem.id}"/>
+                            <jsp:param name="taskName" value="${todoItem.name}"/>
+                            <jsp:param name="projectName" value="${todoItem.project.projectName}"/>
+                            <jsp:param name="periodEnd" value="${todoItem.period.endDate}"/>
+                            <jsp:param name="periodStart" value="${todoItem.period.startDate}"/>
+                            <jsp:param name="status" value="${todoItem.status.description}"/>
+                            <jsp:param name="description" value="${todoItem.text}"/>
+                        </jsp:include>
+                        <div id="${todoItem.id}" href="#taskModal${todoItem.id}" class="" data-toggle="modal">
+                            <address class="address_hover">
                                 <br/>
-                                <strong>${todoItem.name}</strong><br>
-                                    <p class="texBox">${todoItem.text}</p>
-                                <form:form method="POST" action="startProgress">
+                                <h4><strong>${todoItem.name}</strong></h4>
+                                    <%--<p class="texBox">${todoItem.text}</p>--%>
+                                <form:form method="POST" action="/startProgress/${todoItem.id}">
+                                    <input hidden name="currentProject" value="${currentProject}">
                                     <input hidden name="taskId" value="${todoItem.id}">
                                     <button type="submit" class="btn btn-success">Start progress</button>
                                 </form:form>
                                 <br/>
                             </address>
+
                         </div>
                     </c:if>
                 </c:forEach>
@@ -254,6 +283,31 @@
 </div>
 </div>
 </div>
+
+<%--<a href="#taskModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>--%>
+<%--<button type="button" data-toggle="modal" data-target="#myModal">Launch modal</button>--%>
+<%--<div href="#taskModal" class="" data-toggle="modal">Launch demo modal</div>--%>
+
+<%--<!-- Modal -->--%>
+<%--<div class="modal fade" id="taskModal" role="dialog">--%>
+    <%--<div class="modal-dialog">--%>
+
+        <%--<!-- Modal content-->--%>
+        <%--<div class="modal-content">--%>
+            <%--<div class="modal-header">--%>
+                <%--<button type="button" class="close" data-dismiss="modal">&times;</button>--%>
+                <%--<h4 class="modal-title">Confirmation of deletion</h4>--%>
+            <%--</div>--%>
+            <%--<div class="modal-body">--%>
+                <%--<p>Are you shore you want to delete</p>--%>
+            <%--</div>--%>
+            <%--<div class="modal-footer">--%>
+                <%--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+    <%--</div>--%>
+<%--</div>--%>
 
 <script>
     $(document).ready(function () {
@@ -473,6 +527,7 @@
 
 <input hidden id="page-count" value="${maxPage}">
 <a href="#" class="scrollup">ScrollUp</a>
+
 </body>
 </html>
 

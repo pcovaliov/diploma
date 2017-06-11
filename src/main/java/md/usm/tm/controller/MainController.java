@@ -72,34 +72,53 @@ public class MainController extends BaseController {
         return "redirect:/sortTask/" + project.getId();
     }
 
+   /* @RequestMapping(value = "/sortTask{idis}")
+    public String sortRedirect2(Model model, @PathVariable("idis")int idis) {
+
+        System.out.println("herererere ============================================================");
+        System.out.println(idis + "===========================================================");
+        return "redirect:/sortTask/" + idis;
+    }
+*/
     @RequestMapping(value = "/sortTask/{projectID}")
     public String sorting(Model model, @PathVariable("projectID")int projectID ) {
 
         User currentUser = userService.getUserByName(getPrincipal());
         List<Project> projectList = projectService.getAllUsersProjects(currentUser.getId());
         List<Task> todoTasks = taskService.getTasksByProject(projectID);
+        Project project = projectService.getById(projectID);
 
         model.addAttribute("todo", todoTasks);
         model.addAttribute("projectList", projectList);
         model.addAttribute("task", new Task());
-        model.addAttribute("projects", new Project());
+        model.addAttribute("projects", project);
 
         model.addAttribute("currentPage", 0);
+
+        model.addAttribute("currentProject", projectID);
         return "main";
     }
 
-    @RequestMapping(value = "/startProgress", method = RequestMethod.POST)
-    public String startProgress(Model model, @ModelAttribute("projects") Project project,
-                                @RequestParam("taskId") Integer taskId ) {
+    @RequestMapping(value = "/startProgress/{startID}", method = RequestMethod.POST)
+    public String startProgress(Model model, @ModelAttribute("currentProject") String currentProject,
+                                @PathVariable("startID") Integer startID ) {
+        System.out.println(currentProject + "-----------------------------==============================================");
 
-        Task task = taskService.getTaskById(taskId);
+        Task task = taskService.getTaskById(startID);
         task.setStatus(statusService.getStatusById(2));
         taskService.update(task);
+        Project project = projectService.getById(task.getProject().getId());
 
+        if (currentProject.equals("")){
+            return "redirect:/main";
+        } else {
+            return "redirect:/sortTask/" + project.getId();
+        }
 
-
-        return "redirect:/task";
     }
+
+    //Добить просмотр таска в сплывающемся окне
+    //В сплывающем окне добавить опции по редактированию и так далее
 
 //    @RequestMapping("/page={page}")
 //    public String allTasksPagination(Model model, @PathVariable int page) {
