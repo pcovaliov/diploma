@@ -45,6 +45,10 @@
         margin: 0 5% 0 5%;
         }*/
 
+        .modal-open {
+            padding-right: 0 !important;
+        }
+
         .address_hover { background-color: lightgrey; }
 
         .address_hover:hover { background-color: #bfbfbf; }
@@ -189,7 +193,7 @@
             <div class="form-group">
                 <label for="projectList">Sort by Project</label>
                 <form:select class="form-control" id="projectList" path="projectName">
-                    <form:option value="Please Select Project"/>
+                    <form:option value="Show by all Projects"/>
                     <form:options items="${projectList}" itemValue="projectName" itemLabel="projectName"/>
                 </form:select>
                 <p style="color: red" class="form-text text-muted"><form:errors path="projectName"/></p>
@@ -202,9 +206,7 @@
 
                 <c:forEach var="todoItem" items="${todo}">
                     <c:if test="${todoItem.status.id == 1}">
-                        <%--<div id="${todoItem.id}" class = "" onclick="location.href='<c:url value="/task"/>'">--%>
-                        <%--<fmt:formatDate value="${todoItem.period.endDate}" pattern="MM.dd.yyyy"/>--%>
-                        <jsp:include page="js-modal.jsp">
+                        <jsp:include page="js-modal2.jsp">
                             <jsp:param name="id" value="${todoItem.id}"/>
                             <jsp:param name="taskName" value="${todoItem.name}"/>
                             <jsp:param name="projectName" value="${todoItem.project.projectName}"/>
@@ -217,11 +219,10 @@
                             <address class="address_hover">
                                 <br/>
                                 <h4><strong>${todoItem.name}</strong></h4>
-                                    <%--<p class="texBox">${todoItem.text}</p>--%>
-                                <form:form method="POST" action="/startProgress/${todoItem.id}">
+                                <form:form method="POST" action="/change/startProgress/${todoItem.id}">
                                     <input hidden name="currentProject" value="${currentProject}">
                                     <input hidden name="taskId" value="${todoItem.id}">
-                                    <button type="submit" class="btn btn-success">Start progress</button>
+                                    <button style="padding: 7px 15px;" type="submit" class="btn btn-success">Start progress</button>
                                 </form:form>
                                 <br/>
                             </address>
@@ -231,33 +232,59 @@
                 </c:forEach>
             </div>
             <div class="col-sm-3" style="background-color:lavender;">
-                <div style="padding: 20px; color: maroon; font-weight: bold;"> TASKS IN PROGRESS</div>
+                <div style="padding: 20px; color: maroon; font-weight: bold;">TASKS IN PROGRESS</div>
                 <c:forEach var="todoItem" items="${todo}">
                     <c:if test="${todoItem.status.id == 2}">
-                        <div id="${todoItem.id}" class = "">
-                            <address style="background-color:lightgrey;">
+                        <jsp:include page="js-modal2.jsp">
+                            <jsp:param name="id" value="${todoItem.id}"/>
+                            <jsp:param name="taskName" value="${todoItem.name}"/>
+                            <jsp:param name="projectName" value="${todoItem.project.projectName}"/>
+                            <jsp:param name="periodEnd" value="${todoItem.period.endDate}"/>
+                            <jsp:param name="periodStart" value="${todoItem.period.startDate}"/>
+                            <jsp:param name="status" value="${todoItem.status.description}"/>
+                            <jsp:param name="description" value="${todoItem.text}"/>
+                        </jsp:include>
+                        <div id="${todoItem.id}" href="#taskModal${todoItem.id}" class="" data-toggle="modal">
+                            <address class="address_hover">
                                 <br/>
-                                <strong>${todoItem.name}</strong><br>
-                                    <p class="texBox">${todoItem.text}</p>
-                                <button type="button" class="btn btn-info">To review</button>
-                                <br/><br/>
+                                <h4><strong>${todoItem.name}</strong></h4>
+                                <form:form method="POST" action="/change/moveToReview/${todoItem.id}">
+                                    <input hidden name="currentProject" value="${currentProject}">
+                                    <input hidden name="taskId" value="${todoItem.id}">
+                                    <button style="padding: 7px 30px;" type="submit" class="btn btn-info">To review</button>
+                                </form:form>
+                                <br/>
                             </address>
+
                         </div>
                     </c:if>
                 </c:forEach>
             </div>
             <div class="col-sm-3" style="background-color:lavender;">
-                <div style="padding: 20px; color: maroon; font-weight: bold;"> TASKS IN REVIEW</div>
+                <div style="padding: 20px; color: maroon; font-weight: bold;">TASKS IN REVIEW</div>
                 <c:forEach var="todoItem" items="${todo}">
                     <c:if test="${todoItem.status.id == 3}">
-                        <div id="${todoItem.id}" class = "">
-                            <address style="background-color:lightgrey;">
+                        <jsp:include page="js-modal2.jsp">
+                            <jsp:param name="id" value="${todoItem.id}"/>
+                            <jsp:param name="taskName" value="${todoItem.name}"/>
+                            <jsp:param name="projectName" value="${todoItem.project.projectName}"/>
+                            <jsp:param name="periodEnd" value="${todoItem.period.endDate}"/>
+                            <jsp:param name="periodStart" value="${todoItem.period.startDate}"/>
+                            <jsp:param name="status" value="${todoItem.status.description}"/>
+                            <jsp:param name="description" value="${todoItem.text}"/>
+                        </jsp:include>
+                        <div id="${todoItem.id}" href="#taskModal${todoItem.id}" class="" data-toggle="modal">
+                            <address class="address_hover">
                                 <br/>
-                                <strong>${todoItem.name}</strong><br>
-                                    <p class="texBox">${todoItem.text}</p>
-                                <button type="button" class="btn btn-warning">Close</button>
-                                <br/><br/>
+                                <h4><strong>${todoItem.name}</strong></h4>
+                                <form:form method="POST" action="/change/moveToDell/${todoItem.id}">
+                                    <input hidden name="currentProject" value="${currentProject}">
+                                    <input hidden name="taskId" value="${todoItem.id}">
+                                    <button style="padding: 7px 40px;" type="submit" class="btn btn-warning">Close</button>
+                                </form:form>
+                                <br/>
                             </address>
+
                         </div>
                     </c:if>
                 </c:forEach>
@@ -266,14 +293,27 @@
                 <div style="padding: 20px; color: maroon; font-weight: bold;">CLOSED TASKS</div>
                 <c:forEach var="todoItem" items="${todo}">
                     <c:if test="${todoItem.status.id == 4}">
-                        <div id="${todoItem.id}" class = "">
-                            <address style="background-color:lightgrey;">
+                        <jsp:include page="js-modal2.jsp">
+                            <jsp:param name="id" value="${todoItem.id}"/>
+                            <jsp:param name="taskName" value="${todoItem.name}"/>
+                            <jsp:param name="projectName" value="${todoItem.project.projectName}"/>
+                            <jsp:param name="periodEnd" value="${todoItem.period.endDate}"/>
+                            <jsp:param name="periodStart" value="${todoItem.period.startDate}"/>
+                            <jsp:param name="status" value="${todoItem.status.description}"/>
+                            <jsp:param name="description" value="${todoItem.text}"/>
+                        </jsp:include>
+                        <div id="${todoItem.id}" href="#taskModal${todoItem.id}" class="" data-toggle="modal">
+                            <address class="address_hover">
                                 <br/>
-                                <strong>${todoItem.name}</strong><br>
-                                    <p class="texBox">${todoItem.text}</p>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                                <br/><br/>
+                                <h4><strong>${todoItem.name}</strong></h4>
+                                <form:form method="POST" action="/deleteTask/${todoItem.id}">
+                                    <input hidden name="currentProject" value="${currentProject}">
+                                    <input hidden name="taskId" value="${todoItem.id}">
+                                    <button style="padding: 7px 40px;" type="submit" class="btn btn-danger">Delete</button>
+                                </form:form>
+                                <br/>
                             </address>
+
                         </div>
                     </c:if>
                 </c:forEach>

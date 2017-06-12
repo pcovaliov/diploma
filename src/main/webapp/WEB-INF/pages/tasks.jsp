@@ -104,9 +104,21 @@
                 <input type="file" name="file" /><br/>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <c:if test="${task.id > 0}">
+                <button style="margin-right: 150px; padding: 8px 25px;" type="submit" class="btn btn-primary">Submit</button>
+            </c:if>
+            <c:if test="${task.id == 0}">
+                <button style="padding: 8px 25px;" type="submit" class="btn btn-primary">Submit</button>
+            </c:if>
             <form:input type="hidden" path="id" name="id" value="${task.id}"/>
         </form:form>
+        <c:if test="${task.id > 0}">
+            <form:form method="POST" action="/deleteTask/${task.id}">
+                <button style="margin: -60px -150px 0px 0px; padding: 8px 25px;" type="submit" class="btn btn-danger">Delete</button>
+            </form:form>
+        </c:if>
+
+
     </div>
 </div>
 <%--<c:forEach items="${taskList}" var="tas">--%>

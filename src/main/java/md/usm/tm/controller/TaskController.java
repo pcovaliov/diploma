@@ -127,4 +127,17 @@ public class TaskController extends BaseController {
         return "redirect:/main";
     }
 
+
+    @RequestMapping(value = "/editTask{taskID}")
+    public String saveTask(@PathVariable("taskID") int taskID) {
+        return "redirect:/task{taskID}";
+    }
+
+    @RequestMapping(value = "task{taskID}")
+    public String allTasks(Model model, @PathVariable("taskID") int taskID) {
+        init(model);
+        model.addAttribute("task", taskService.getTaskById(taskID));
+        return "tasks";
+    }
+
 }

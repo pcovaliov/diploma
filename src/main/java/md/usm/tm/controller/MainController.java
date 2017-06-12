@@ -67,8 +67,10 @@ public class MainController extends BaseController {
 
     @RequestMapping(value = "/sortTask", method = RequestMethod.POST)
     public String sortRedirect(Model model, @ModelAttribute("projects") Project project) {
+        if (project.getProjectName().equals("Show by all Projects")){
+            return "redirect:/main";
+        }
         project = projectService.findByProjectName(project.getProjectName());
-
         return "redirect:/sortTask/" + project.getId();
     }
 
@@ -99,13 +101,14 @@ public class MainController extends BaseController {
         return "main";
     }
 
-    @RequestMapping(value = "/startProgress/{startID}", method = RequestMethod.POST)
+    @RequestMapping(value = "/change/{val}/{taskID}", method = RequestMethod.POST)
     public String startProgress(Model model, @ModelAttribute("currentProject") String currentProject,
-                                @PathVariable("startID") Integer startID ) {
+                                @PathVariable("taskID") Integer taskID, @PathVariable("val") String val ) {
         System.out.println(currentProject + "-----------------------------==============================================");
 
-        Task task = taskService.getTaskById(startID);
-        task.setStatus(statusService.getStatusById(2));
+
+        Task task = taskService.getTaskById(taskID);
+        task.setStatus(statusService.getStatusById(changeTo(val)));
         taskService.update(task);
         Project project = projectService.getById(task.getProject().getId());
 
@@ -116,6 +119,54 @@ public class MainController extends BaseController {
         }
 
     }
+
+    private int changeTo(String val){
+        if (val.equals("startProgress")){
+            return 2;
+        } else if (val.equals("moveToReview")){
+            return 3;
+        } else if (val.equals("moveToDell")){
+            return 4;
+        }
+
+        return 0;
+    }
+
+//    @RequestMapping(value = "/startProgress/{startID}", method = RequestMethod.POST)
+//    public String startProgress(Model model, @ModelAttribute("currentProject") String currentProject,
+//                                @PathVariable("startID") Integer startID ) {
+//        System.out.println(currentProject + "-----------------------------==============================================");
+//
+//        Task task = taskService.getTaskById(startID);
+//        task.setStatus(statusService.getStatusById(2));
+//        taskService.update(task);
+//        Project project = projectService.getById(task.getProject().getId());
+//
+//        if (currentProject.equals("")){
+//            return "redirect:/main";
+//        } else {
+//            return "redirect:/sortTask/" + project.getId();
+//        }
+//
+//    }
+
+//    @RequestMapping(value = "/moveToReview/{startID}", method = RequestMethod.POST)
+//    public String moveToReview(Model model, @ModelAttribute("currentProject") String currentProject,
+//                                @PathVariable("startID") Integer startID ) {
+//        System.out.println(currentProject + "-----------------------------==============================================");
+//
+//        Task task = taskService.getTaskById(startID);
+//        task.setStatus(statusService.getStatusById(3));
+//        taskService.update(task);
+//        Project project = projectService.getById(task.getProject().getId());
+//
+//        if (currentProject.equals("")){
+//            return "redirect:/main";
+//        } else {
+//            return "redirect:/sortTask/" + project.getId();
+//        }
+//
+//    }
 
     //Добить просмотр таска в сплывающемся окне
     //В сплывающем окне добавить опции по редактированию и так далее
@@ -138,10 +189,23 @@ public class MainController extends BaseController {
 //        return "redirect:/main";
 //    }
 
-    @RequestMapping(value = "/deleteTask/{id}", method = RequestMethod.GET)
-    public String deleteTask(@PathVariable int id) {
-        taskService.deleteTask(taskService.getTaskById(id));
-        return "redirect:/main";
+    @RequestMapping(value = "/deleteTask/{dellID}", method = RequestMethod.POST)
+    public String deleteTask(@PathVariable("dellID") int dellID, @ModelAttribute("currentProject") String currentProject) {
+
+        System.out.println(dellID + " ===========================================================================");
+
+        Task task = taskService.getTaskById(dellID);
+        Project project = projectService.getById(task.getProject().getId());
+        taskService.deleteTask(taskService.getTaskById(dellID));
+
+        System.out.println(project.getId() + " ===========================================================================");
+        System.out.println(currentProject + " ===========================================================================");
+        System.out.println(currentProject.equals("") + " ===========================================================================");
+        if (currentProject.equals("")){
+            return "redirect:/main";
+        } else {
+            return "redirect:/sortTask/" + project.getId();
+        }
     }
 
 }
